@@ -27,5 +27,12 @@ namespace BlackJackSimulation
             for (int i = 1; i < 10; i++)
                 Cards[i] = 4 * _deckAmount;
         }
+
+        public int[] Shuffle()
+        {
+            int[] shuffledDeck = new int[_totalCards];
+            //TODO: Shuffle Logic
+            return shuffledDeck;
+        }
     }
 }
