@@ -1,42 +1,75 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace BlackJackSimulation
 {
     class Shoe
     {
-        private int _deckAmount;
-        private int _totalCards;
-        public int[] Cards;
+        public int _deckAmount;
+        public Stack<int> _Shoe;
+        public List<int> _ShoeList;
 
         public Shoe(int deckAmount)
         {
-            _deckAmount = deckAmount;
-            _totalCards = _deckAmount * 52;
-            Cards = new int[11];
-            GenerateDeck();
+            this._deckAmount = deckAmount;
+            _Shoe = new Stack<int>();
+            _ShoeList = new List<int>();
+            GenerateShoe();
+            Shuffle();
         }
 
-        public void GenerateDeck()
+
+
+        public void GenerateShoe()
         {
-            Cards[0] = _totalCards;
-            Cards[10] = 4 * 4 * _deckAmount;
 
             for (int i = 1; i < 10; i++)
-                Cards[i] = 4 * _deckAmount;
+            {
+                for (int j = 0; j < 4 * _deckAmount; j++)
+                {
+                    _ShoeList.Add(i);
+                }
+            }
+            for (int i = 0; i < 4 * 4 * _deckAmount; i++)
+            {
+                _ShoeList.Add(10);
+
+            }
+
+
         }
 
-        /// <summary>
-        /// Shuffle Method
-        /// </summary>
-        /// <returns></returns>
-        public int[] Shuffle()
+
+
+        public void Shuffle()
         {
-            int[] shuffledDeck = new int[_totalCards];
-            //TODO: Shuffle Logic
-            return shuffledDeck;
+            Stack<int> temp = new Stack<int>();
+            for (int i = 0; i < _ShoeList.Count; i++)
+            {
+                int r = NextInt(0, _ShoeList.Count - 1);
+                temp.Push(_ShoeList[r]);
+                _ShoeList.RemoveAt(r);
+
+            }
+
+            _Shoe = temp;
+
         }
+
+
+        private static int NextInt(int min, int max)
+        {
+            RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
+            byte[] buffer = new byte[4];
+
+            rng.GetBytes(buffer);
+            int result = BitConverter.ToInt32(buffer, 0);
+
+            return new Random(result).Next(min, max);
+        }
+
     }
 }

@@ -10,7 +10,19 @@ namespace BlackJackSimulation
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Hello BiJi");
+            Shoe shoe = new Shoe(8);
+
+            Stack<int> shu = new Stack<int>();
+
+            shu = shoe._Shoe;
+
+            
+             Console.WriteLine(shu.Count + " ");
+                
+            
+
+           
+           
             
         }
     }
