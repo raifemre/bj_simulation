@@ -10,6 +10,8 @@ namespace blackJack_Simulation
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Hello BiJi");
+            
         }
     }
 }
