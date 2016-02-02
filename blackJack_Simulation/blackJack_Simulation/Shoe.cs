@@ -46,8 +46,9 @@ namespace BlackJackSimulation
 
         public void Shuffle()
         {
+            int size = _ShoeList.Count;
             Stack<int> temp = new Stack<int>();
-            for (int i = 0; i < _ShoeList.Count; i++)
+            for (int i = 0; i < size; i++)
             {
                 int r = NextInt(0, _ShoeList.Count - 1);
                 temp.Push(_ShoeList[r]);

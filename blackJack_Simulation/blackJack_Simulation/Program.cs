@@ -13,17 +13,30 @@ namespace BlackJackSimulation
             Shoe shoe = new Shoe(8);
 
             Stack<int> shu = new Stack<int>();
+            List<int> so = new List<int>();
 
             shu = shoe._Shoe;
 
-            
-             Console.WriteLine(shu.Count + " ");
+            for (int i = 0; i < 416; i++)
+            {
+                so.Add(shu.Pop());
                 
-            
+            }
 
-           
-           
-            
+            so.Sort();
+
+            for (int i = 0; i < 416; i++)
+            {
+                Console.WriteLine(i + " " + so[i]);
+
+            }
+
+
+
+
+
+
+
         }
     }
 }
