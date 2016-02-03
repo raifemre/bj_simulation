@@ -10,12 +10,12 @@ namespace BlackjackSimulation
         
         public SimulationEngine(int deckAmount)
         {
-            this.shoe = new Shoe(deckAmount);
-            this.dealer = new Player(true);
-            this.player = new Player(false);
-            this.isBlackJack = false;
-            this.playerBusted = false;
-            this.dealerBusted = false;
+            this.Shoe = new Shoe(deckAmount);
+            this.Dealer = new Player(true);
+            this.Player = new Player(false);
+            this.IsBlackJack = false;
+            this.PlayerBusted = false;
+            this.DealerBusted = false;
         }
 
         public enum GameAction
@@ -26,37 +26,37 @@ namespace BlackjackSimulation
             SPLIT = 4
         }
 
-        public Player player { get; private set; }
+        public Player Player { get; private set; }
 
-        public Player dealer { get; private set; }
+        public Player Dealer { get; private set; }
 
-        public Shoe shoe { get; private set; }
+        public Shoe Shoe { get; private set; }
 
-        public int bet { get; private set; }
+        public int Bet { get; private set; }
 
-        public bool isBlackJack { get; private set; }
+        public bool IsBlackJack { get; private set; }
 
-        public bool playerBusted { get; private set; }
+        public bool PlayerBusted { get; private set; }
 
-        public bool dealerBusted { get; private set; }
+        public bool DealerBusted { get; private set; }
 
 
-        public void NewTurn(int betson)
+        public void NewTurn(int Betson)
         {
-            this.bet = betson;
-            player.balance -= bet;
+            this.Bet = Betson;
+            Player.Balance -= Bet;
 
-            player._Hand.Clear();
-            dealer._Hand.Clear();
+            Player._Hand.Clear();
+            Dealer._Hand.Clear();
 
-            shoe.Draw(player._Hand);
-            shoe.Draw(dealer._Hand);
-            shoe.Draw(player._Hand);
-            shoe.Draw(dealer._Hand);
+            Shoe.Draw(Player._Hand);
+            Shoe.Draw(Dealer._Hand);
+            Shoe.Draw(Player._Hand);
+            Shoe.Draw(Dealer._Hand);
 
-            if(player._Hand.GetValues()[0] == 21)
+            if(Player._Hand.GetValues()[0] == 21)
             {
-                isBlackJack = true;
+                IsBlackJack = true;
                 DealerTurn();
             }
 
@@ -65,9 +65,9 @@ namespace BlackjackSimulation
 
         public void PlayerTurn()
         {
-            if(player._Hand.GetValues()[0] > 21)
+            if(Player._Hand.GetValues()[0] > 21)
             {
-                playerBusted = true;
+                PlayerBusted = true;
                 DealerTurn();
             }
 
@@ -79,19 +79,19 @@ namespace BlackjackSimulation
             }
             else if (response == GameAction.HIT)
             {
-                shoe.Draw(player._Hand);
+                Shoe.Draw(Player._Hand);
                 PlayerTurn();
             }
             else if (response == GameAction.DOUBLE)
             {
-                if(player.balance > bet)
+                if(Player.Balance > Bet)
                 {
-                    shoe.Draw(player._Hand);
+                    Shoe.Draw(Player._Hand);
                     DealerTurn();
                 }
                 else
                 {
-                    shoe.Draw(player._Hand);
+                    Shoe.Draw(Player._Hand);
                     PlayerTurn();
                 }   
             }
@@ -100,14 +100,14 @@ namespace BlackjackSimulation
         public void DealerTurn()
         {
 
-            if (dealer._Hand.GetValues()[0] > 21)
+            if (Dealer._Hand.GetValues()[0] > 21)
             {
-                dealerBusted = true;
+                DealerBusted = true;
                 EndTurn();
             }
-            else if (dealer._Hand.GetValues()[0] < 17)
+            else if (Dealer._Hand.GetValues()[0] < 17)
             {
-                shoe.Draw(dealer._Hand);
+                Shoe.Draw(Dealer._Hand);
                 DealerTurn();
             }
             else
@@ -118,26 +118,26 @@ namespace BlackjackSimulation
 
         public void EndTurn()
         {
-            bool playerWins = false;
-            int playerTotal = player._Hand.GetValues()[0];
-            int dealerTotal = dealer._Hand.GetValues()[0];
+            bool PlayerWins = false;
+            int PlayerTotal = Player._Hand.GetValues()[0];
+            int DealerTotal = Dealer._Hand.GetValues()[0];
 
-            if (playerTotal > dealerTotal) playerWins = true;
-            if (dealerBusted) playerWins = true;
-            if (playerBusted) playerWins = false;
+            if (PlayerTotal > DealerTotal) PlayerWins = true;
+            if (DealerBusted) PlayerWins = true;
+            if (PlayerBusted) PlayerWins = false;
 
 
-            if (playerWins)
+            if (PlayerWins)
             {
-                player.balance += bet * 2;
-                    if (isBlackJack)
+                Player.Balance += Bet * 2;
+                    if (IsBlackJack)
                     {
-                        player.balance += bet;
+                        Player.Balance += Bet;
                     }
             }
-            isBlackJack = false;
-            dealerBusted = false;
-            playerBusted = false;
+            IsBlackJack = false;
+            DealerBusted = false;
+            PlayerBusted = false;
         }
     }
 }
