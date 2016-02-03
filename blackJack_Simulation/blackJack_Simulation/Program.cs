@@ -10,7 +10,7 @@ namespace BlackjackSimulation
         static void Main(string[] args)
         {
             Shoe shoe = new Shoe(2);
-            Stack<int> cards = shoe.GetCards();
+            Stack<int> cards = shoe.Cards;
 
             int size = cards.Count;
 
@@ -20,7 +20,7 @@ namespace BlackjackSimulation
             Console.WriteLine();
 
             shoe = new Shoe(1);
-            cards = shoe.GetCards();
+            cards = shoe.Cards;
             size = cards.Count;
 
             for (int i = 0; i < size; i++)

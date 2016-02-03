@@ -9,18 +9,14 @@ namespace BlackjackSimulation
     class Shoe
     {
         private int _deckAmount;
-        private Stack<int> _cards;
         private List<int> _cardsList;
-       
+
+        public Stack<int> Cards;
+
         public Shoe(int deckAmount)
         {
             _deckAmount = deckAmount;
             GenerateShoe();
-        }
-
-        public Stack<int> GetCards()
-        {
-            return _cards;
         }
 
         public void GenerateShoe()
@@ -36,14 +32,14 @@ namespace BlackjackSimulation
                 _cardsList.Add(10);
 
             //Shuffled cards, shoe
-            _cards = new Stack<int>();
+            Cards = new Stack<int>();
 
             int size = _cardsList.Count;
 
             for (int i = 0; i < size; i++)
             {
                 int rand = NextInt(0, _cardsList.Count - 1);
-                _cards.Push(_cardsList[rand]);
+                Cards.Push(_cardsList[rand]);
                 _cardsList.RemoveAt(rand);
             }
         }
