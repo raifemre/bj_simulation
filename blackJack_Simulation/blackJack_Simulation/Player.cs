@@ -8,11 +8,15 @@ namespace BlackjackSimulation
     class Player
     {
         public bool IsDealer { get; set; }
-        public Hand _Hand = new Hand();
+        public Hand _Hand;
+        public Decimal balance;
+        
 
         public Player(bool isDealer)
         {
             IsDealer = isDealer;
+            _Hand = new Hand(IsDealer);
+            this.balance = 1000;
         }
     }
 }

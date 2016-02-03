@@ -8,15 +8,24 @@ namespace BlackjackSimulation
     class Hand
     {
         private List<int> CardsInHand;
+        
 
-        public Hand()
+        public Hand(bool isDealer)
         {
+            this.IsDealer = isDealer;
             CardsInHand = new List<int>();
         }
-        
+
+        public bool IsDealer { get; private set; }
+
         public void AddCard(int cardValue)
         {
             CardsInHand.Add(cardValue);
+        }
+
+        public void Clear()
+        {
+            CardsInHand.Clear();
         }
 
         //[0] = total, [1] = softTotal

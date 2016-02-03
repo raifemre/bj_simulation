@@ -54,5 +54,13 @@ namespace BlackjackSimulation
 
             return new Random(result).Next(min, max);
         }
+
+
+        public void Draw(Hand hand)
+        {
+            int card = Cards.Pop();
+            hand.AddCard(card);
+        }
+
     }
 }
