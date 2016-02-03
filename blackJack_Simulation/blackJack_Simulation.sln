@@ -1,9 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
-MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blackJack_Simulation", "blackJack_Simulation\blackJack_Simulation.csproj", "{33851184-8177-4242-981B-4D60F06CEE99}"
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "blackjack_Simulation", "blackJack_Simulation\blackjack_Simulation.csproj", "{33851184-8177-4242-981B-4D60F06CEE99}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

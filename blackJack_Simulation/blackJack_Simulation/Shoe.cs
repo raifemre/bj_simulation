@@ -4,64 +4,51 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace BlackJackSimulation
+namespace BlackjackSimulation
 {
     class Shoe
     {
-        public int _deckAmount;
-        public Stack<int> _Shoe;
-        public List<int> _ShoeList;
-
+        private int _deckAmount;
+        private Stack<int> _cards;
+        private List<int> _cardsList;
+       
         public Shoe(int deckAmount)
         {
-            this._deckAmount = deckAmount;
-            _Shoe = new Stack<int>();
-            _ShoeList = new List<int>();
+            _deckAmount = deckAmount;
             GenerateShoe();
-            Shuffle();
         }
 
-
+        public Stack<int> GetCards()
+        {
+            return _cards;
+        }
 
         public void GenerateShoe()
         {
+            //Ordered list of cards
+            _cardsList = new List<int>();
 
             for (int i = 1; i < 10; i++)
-            {
                 for (int j = 0; j < 4 * _deckAmount; j++)
-                {
-                    _ShoeList.Add(i);
-                }
-            }
+                    _cardsList.Add(i);
+
             for (int i = 0; i < 4 * 4 * _deckAmount; i++)
-            {
-                _ShoeList.Add(10);
+                _cardsList.Add(10);
 
-            }
+            //Shuffled cards, shoe
+            _cards = new Stack<int>();
 
+            int size = _cardsList.Count;
 
-        }
-
-
-
-        public void Shuffle()
-        {
-            int size = _ShoeList.Count;
-            Stack<int> temp = new Stack<int>();
             for (int i = 0; i < size; i++)
             {
-                int r = NextInt(0, _ShoeList.Count - 1);
-                temp.Push(_ShoeList[r]);
-                _ShoeList.RemoveAt(r);
-
+                int rand = NextInt(0, _cardsList.Count - 1);
+                _cards.Push(_cardsList[rand]);
+                _cardsList.RemoveAt(rand);
             }
-
-            _Shoe = temp;
-
         }
-
-
-        private static int NextInt(int min, int max)
+                      
+        private int NextInt(int min, int max)
         {
             RNGCryptoServiceProvider rng = new RNGCryptoServiceProvider();
             byte[] buffer = new byte[4];
@@ -71,6 +58,5 @@ namespace BlackJackSimulation
 
             return new Random(result).Next(min, max);
         }
-
     }
 }

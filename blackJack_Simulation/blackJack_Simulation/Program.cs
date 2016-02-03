@@ -2,41 +2,29 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace BlackJackSimulation
+namespace BlackjackSimulation
 {
     class Program
     {
         static void Main(string[] args)
         {
-            Shoe shoe = new Shoe(8);
+            Shoe shoe = new Shoe(2);
+            Stack<int> cards = shoe.GetCards();
 
-            Stack<int> shu = new Stack<int>();
-            List<int> so = new List<int>();
+            int size = cards.Count;
 
-            shu = shoe._Shoe;
+            for (int i = 0; i < size; i++)
+                Console.WriteLine("{0:000}) {1}", i + 1, cards.Pop());
 
-            for (int i = 0; i < 416; i++)
-            {
-                so.Add(shu.Pop());
-                
-            }
+            Console.WriteLine();
 
-            so.Sort();
+            shoe = new Shoe(1);
+            cards = shoe.GetCards();
+            size = cards.Count;
 
-            for (int i = 0; i < 416; i++)
-            {
-                Console.WriteLine(i + " " + so[i]);
-
-            }
-
-
-
-
-
-
-
+            for (int i = 0; i < size; i++)
+                Console.WriteLine("{0:000}) {1}", i + 1, cards.Pop());
         }
     }
 }
