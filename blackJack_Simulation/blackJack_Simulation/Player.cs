@@ -9,14 +9,13 @@ namespace BlackjackSimulation
     {
         public bool IsDealer { get; set; }
         public Hand _Hand;
-        public Decimal Balance;
-        
+        public int Balance;        
 
-        public Player(bool isDealer)
+        public Player(bool isDealer, int balance)
         {
-            IsDealer = isDealer;
             _Hand = new Hand(IsDealer);
-            this.Balance = 1000;
+            IsDealer = isDealer;
+            Balance = balance;
         }
     }
 }

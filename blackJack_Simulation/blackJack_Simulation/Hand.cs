@@ -12,8 +12,8 @@ namespace BlackjackSimulation
 
         public Hand(bool isDealer)
         {
-            this.IsDealer = isDealer;
             CardsInHand = new List<int>();
+            IsDealer = isDealer;
         }
 
         public bool IsDealer { get; private set; }
