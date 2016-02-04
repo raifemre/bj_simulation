@@ -9,9 +9,9 @@ namespace BlackjackSimulation
     class Shoe
     {
         private int _deckAmount;
-               
         public int[] CardAmounts;
         public Stack<Card> Cards;
+        public int CutCardIndex;
 
         public Shoe(int deckAmount)
         {
@@ -45,6 +45,9 @@ namespace BlackjackSimulation
             CardAmounts[0] = _deckAmount * 52;
             for (int i = 1; i < CardAmounts.Length; i++)
                 CardAmounts[i] = _deckAmount * 4;
+
+            CutCardIndex = (_deckAmount * 52) * NextInt(45, 55) / 100;
+
         }
                       
         private int NextInt(int min, int max)

@@ -11,32 +11,57 @@ namespace BlackjackSimulation
         public Player My { get; private set; }
         public Player Dealer { get; private set; }
         public int CurrentBetAmount { get; private set; }
-
-
-        public SimulationEngine(int deckAmount)
+        public List<Player> Players { get; private set; }
+        public int TotalTurns = 0;
+        public SimulationEngine(int deckAmount, List<Player> externalPlayers)
         {
             CurrentShoe = new Shoe(deckAmount);
-            Dealer = new Player(true, 0);
-            My = new Player(false, 10000);
-            My._Hand.IsBusted = false;
-            Dealer._Hand.IsBusted = false;
+            Players = new List<Player>();
+            Dealer = new Player(true, false, 0, 0, 0);
+            My = new Player(false, true, 0, 0, 10000);
+            Players.Add(Dealer);
+            Players.Add(My);
+            foreach (Player _player in externalPlayers)
+            {
+                Players.Add(_player);
+            }
+
         }
 
-        public void Start(int betAmount)
+
+
+        public void StartNewTurn(int betAmount)
         {
+            TotalTurns++;
+
             CurrentBetAmount = betAmount;
             My.Balance -= CurrentBetAmount;
 
             My._Hand.Clear();
             Dealer._Hand.Clear();
 
-            //düş 
-            CurrentShoe.Deal(My._Hand);
-            CurrentShoe.Deal(Dealer._Hand);
-            //düş - Split ve Double Stratejisi burada belirlenmeli.
-            CurrentShoe.Deal(My._Hand);
-            //düşme
-            CurrentShoe.Deal(Dealer._Hand);
+
+            foreach (Player _player in Players)
+            {
+                for (int i = 0; i < 2; i++) // i = 0 da herkese dağıttı ve kartları düştü , i=1 de herkese dağıttı ama dealerın kartını düşmedi ancak totalden düştü. !! dealer 2. kartını açtığında bu kartta düşülmeli !!
+                {
+                    if (i == 1)
+                    {
+                        CurrentShoe.Deal(_player._Hand);
+                        CurrentShoe.CardAmounts[0]--;
+                        if(!_player.IsDealer)
+                            CurrentShoe.CardAmounts[_player.LastCard().GetCardValue()]--;
+                    }
+                    else
+                    {
+                        CurrentShoe.Deal(_player._Hand);
+                        CurrentShoe.CardAmounts[0]--;
+                        CurrentShoe.CardAmounts[_player.LastCard().GetCardValue()]--;
+                    }
+                        
+                }
+
+            }
 
             //TODO:[0] [1]
             if (My._Hand.GetValues()[0] == 21)
@@ -72,7 +97,7 @@ namespace BlackjackSimulation
             }
 
             //Player is a "real" player
-            else
+            else if (currentPlayer.IsMe)
             {
                 if (currentPlayer._Hand.GetValues()[0] > 21)
                 {
@@ -88,6 +113,8 @@ namespace BlackjackSimulation
                     case MoveAction.HIT:
                         {
                             CurrentShoe.Deal(currentPlayer._Hand);
+                            CurrentShoe.CardAmounts[0]--;
+                            CurrentShoe.CardAmounts[currentPlayer.LastCard().GetCardValue()]--;
                             Turn(currentPlayer); //Turn(My);
                             break;
                         }
@@ -96,11 +123,15 @@ namespace BlackjackSimulation
                             if (currentPlayer.Balance > CurrentBetAmount)
                             {
                                 CurrentShoe.Deal(currentPlayer._Hand);
+                                CurrentShoe.CardAmounts[0]--;
+                                CurrentShoe.CardAmounts[currentPlayer.LastCard().GetCardValue()]--;
                                 return;
                             }
                             else
                             {
                                 CurrentShoe.Deal(currentPlayer._Hand);
+                                CurrentShoe.CardAmounts[0]--;
+                                CurrentShoe.CardAmounts[currentPlayer.LastCard().GetCardValue()]--;
                                 Turn(currentPlayer); //Turn(My);
                             }
                             break;
@@ -115,6 +146,10 @@ namespace BlackjackSimulation
                     default:
                         break;
                 }
+            }
+            else
+            {
+                // other players
             }
         }
 
@@ -142,6 +177,16 @@ namespace BlackjackSimulation
 
             Dealer._Hand.IsBusted = false;
             My._Hand.IsBusted = false;
+
+            // Report of each turn
+            Console.WriteLine("P: {0}\tD: {1}\tBalance: {2}", My._Hand.GetValues()[0], Dealer._Hand.GetValues()[0], My.Balance);
+
+            int BetStrategyResponse = 200;
+
+            if (My.Balance > BetStrategyResponse && CurrentShoe.CardAmounts[0] > CurrentShoe.CutCardIndex)
+            {
+                StartNewTurn(BetStrategyResponse);
+            }
         }
     }
 }
