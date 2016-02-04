@@ -9,9 +9,9 @@ namespace BlackjackSimulation
     class Shoe
     {
         private int _deckAmount;
-        private List<int> _cardsList;
-
-        public Stack<int> Cards;
+               
+        public int[] CardAmounts;
+        public Stack<Card> Cards;
 
         public Shoe(int deckAmount)
         {
@@ -19,29 +19,32 @@ namespace BlackjackSimulation
             GenerateShoe();
         }
 
-        public void GenerateShoe()
+        private void GenerateShoe()
         {
-            //Ordered list of cards
-            _cardsList = new List<int>();
+            List<Card> tempList = new List<Card>();
 
-            for (int i = 1; i < 10; i++)
+            for (int i = 1; i < 14; i++)
                 for (int j = 0; j < 4 * _deckAmount; j++)
-                    _cardsList.Add(i);
-
-            for (int i = 0; i < 4 * 4 * _deckAmount; i++)
-                _cardsList.Add(10);
+                    tempList.Add((Card)i);
 
             //Shuffled cards, shoe
-            Cards = new Stack<int>();
+            Cards = new Stack<Card>();
 
-            int size = _cardsList.Count;
+            int size = tempList.Count;
 
             for (int i = 0; i < size; i++)
             {
-                int rand = NextInt(0, _cardsList.Count - 1);
-                Cards.Push(_cardsList[rand]);
-                _cardsList.RemoveAt(rand);
+                int rand = NextInt(0, tempList.Count - 1);
+                Cards.Push(tempList[rand]);
+                tempList.RemoveAt(rand);
             }
+
+            //Total Card Amounts
+            //[0] = Total amount of cards, [1] = A, .... [10] = T, [11] = J, [12] = Q, [13] = K
+            CardAmounts = new int[14];
+            CardAmounts[0] = _deckAmount * 52;
+            for (int i = 1; i < CardAmounts.Length; i++)
+                CardAmounts[i] = _deckAmount * 4;
         }
                       
         private int NextInt(int min, int max)
@@ -58,7 +61,7 @@ namespace BlackjackSimulation
 
         public void Deal(Hand hand)
         {
-            int card = Cards.Pop();
+            Card card = Cards.Pop();//.GetCardValue(); ?
             hand.AddCard(card);
         }
 

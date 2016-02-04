@@ -7,25 +7,25 @@ namespace BlackjackSimulation
 {
     class Hand
     {
-        private List<int> CardsInHand;
-        
+        //obsolete : CardsInHand
+        public List<Card> AllCards;
 
         public Hand(bool isDealer)
         {
-            CardsInHand = new List<int>();
+            AllCards = new List<Card>();
             IsDealer = isDealer;
         }
 
         public bool IsDealer { get; private set; }
 
-        public void AddCard(int cardValue)
+        public void AddCard(Card card)
         {
-            CardsInHand.Add(cardValue);
+            AllCards.Add(card);
         }
 
         public void Clear()
         {
-            CardsInHand.Clear();
+            AllCards.Clear();
         }
 
         //[0] = total, [1] = softTotal
@@ -34,10 +34,10 @@ namespace BlackjackSimulation
             int total = 0, softTotal = 0;
             bool HasAce = false;
 
-            for (int i = 0; i < CardsInHand.Count; ++i)
+            for (int i = 0; i < AllCards.Count; ++i)
             {
-                total += CardsInHand[i];
-                if (CardsInHand[i] == 1)
+                total += AllCards[i].GetCardValue();
+                if (AllCards[i] == Card.Ace)
                     HasAce = true;
             }
             if (HasAce && total < 12)

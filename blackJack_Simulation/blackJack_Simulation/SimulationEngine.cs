@@ -7,19 +7,19 @@ namespace BlackjackSimulation
 {
     class SimulationEngine
     {
-        public Shoe Shoe { get; private set; }
-        public Player Player { get; private set; }
+        public Shoe CurrentShoe { get; private set; }
+        public Player Me { get; private set; }
         public Player Dealer { get; private set; }
         public int CurrentBetAmount { get; private set; }
-        public bool IsBlackJack { get; private set; }
+        public bool IsBlackJack { get; private set; } 
         public bool IsPlayerBusted { get; private set; }
-        public bool IsDealerBusted { get; private set; }
+        public bool IsDealerBusted { get; private set; }        
 
         public SimulationEngine(int deckAmount)
         {
-            Shoe = new Shoe(deckAmount);
+            CurrentShoe = new Shoe(deckAmount);
             Dealer = new Player(true,0);
-            Player = new Player(false,10000);
+            Me = new Player(false,10000);
             IsBlackJack = false;
             IsPlayerBusted = false;
             IsDealerBusted = false;
@@ -28,18 +28,21 @@ namespace BlackjackSimulation
         public void NewTurn(int bet)
         {
             CurrentBetAmount = bet;
-            Player.Balance -= CurrentBetAmount;
+            Me.Balance -= CurrentBetAmount;
 
-            Player._Hand.Clear();
+            Me._Hand.Clear();
             Dealer._Hand.Clear();
 
-            Shoe.Deal(Player._Hand);
-            Shoe.Deal(Dealer._Hand);
-            Shoe.Deal(Player._Hand);
-            Shoe.Deal(Dealer._Hand);
+            //düş 
+            CurrentShoe.Deal(Me._Hand);
+            CurrentShoe.Deal(Dealer._Hand);
+            //düş - Split ve Double Stratejisi burada belirlenmeli.
+            CurrentShoe.Deal(Me._Hand);
+            //düşme
+            CurrentShoe.Deal(Dealer._Hand);
 
             //TODO:[0] [1]
-            if(Player._Hand.GetValues()[0] == 21)
+            if(Me._Hand.GetValues()[0] == 21)
             {
                 IsBlackJack = true;
                 DealerTurn();
@@ -48,12 +51,17 @@ namespace BlackjackSimulation
             PlayerTurn();
         }
 
+        //TODO: Turn method'unu PlayerTurn veya DealerTurn yapmak yerine Turn(Dealer);, Turn(Player); şeklinde çağırabileceğimiz tek bir metoda indirgeyebiliriz !
+        //if Player, if Dealer.. 
+        //Birden fazla bizim yönetebileceğimiz Player'a sahip olup değişik testler de yapabiliriz ileride ???
         public void PlayerTurn()
         {
-            if(Player._Hand.GetValues()[0] > 21)
+            if(Me._Hand.GetValues()[0] > 21)
             {
                 IsPlayerBusted = true;
-                DealerTurn();
+                //void'e return şeeklii - veya Tersine çevirebiliriz bu kısmı < 21'se aşağıdakileri yapar..
+                //Obsolote: DealerTurn();
+                return;                
             }
 
             //17 ThinkAction...
@@ -63,26 +71,35 @@ namespace BlackjackSimulation
                 DealerTurn();
             else if (move == MoveAction.HIT)
             {
-                Shoe.Deal(Player._Hand);
+                CurrentShoe.Deal(Me._Hand);
                 PlayerTurn();
             }
             else if (move == MoveAction.DOUBLE)
             {
-                if(Player.Balance > CurrentBetAmount)
+                if(Me.Balance > CurrentBetAmount)
                 {
-                    Shoe.Deal(Player._Hand);
+                    CurrentShoe.Deal(Me._Hand);
                     DealerTurn();
                 }
                 else
                 {
-                    Shoe.Deal(Player._Hand);
+                    CurrentShoe.Deal(Me._Hand);
                     PlayerTurn();
                 }   
             }
         }
 
         public void DealerTurn()
-        {
+        {            
+            //if Dealer.Hand.Count > 2 
+            //TODO: Array'den düş CurrentShoe.CardAmounts // fena değil gibi?
+            int totalCards = Dealer._Hand.AllCards.Count;
+            if (totalCards > 2)
+            {
+                int currentCard = (int)Dealer._Hand.AllCards[totalCards - 1];
+                CurrentShoe.CardAmounts[0]--;
+                CurrentShoe.CardAmounts[currentCard]--;
+            }
 
             if (Dealer._Hand.GetValues()[0] > 21)
             {
@@ -91,7 +108,7 @@ namespace BlackjackSimulation
             }
             else if (Dealer._Hand.GetValues()[0] < 17)
             {
-                Shoe.Deal(Dealer._Hand);
+                CurrentShoe.Deal(Dealer._Hand);
                 DealerTurn();
             }
             else
@@ -100,7 +117,7 @@ namespace BlackjackSimulation
 
         public void EndTurn()
         {
-            int PlayerTotal = Player._Hand.GetValues()[0];
+            int PlayerTotal = Me._Hand.GetValues()[0];
             int DealerTotal = Dealer._Hand.GetValues()[0];
 
             bool PlayerWins = false;
@@ -114,9 +131,9 @@ namespace BlackjackSimulation
 
             if (PlayerWins)
             {
-                Player.Balance += CurrentBetAmount * 2;
+                Me.Balance += CurrentBetAmount * 2;
                 if (IsBlackJack)
-                    Player.Balance += CurrentBetAmount;
+                    Me.Balance += CurrentBetAmount;
             }
 
             IsBlackJack = false;

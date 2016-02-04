@@ -7,10 +7,6 @@ namespace BlackjackSimulation
 {
     class Program
     {
-
-        
-
-
         static void Main(string[] args)
         {
 
@@ -18,28 +14,9 @@ namespace BlackjackSimulation
 
             for (int i = 0; i < 30; i++)
             {
-                engine.NewTurn(10); Console.WriteLine(engine.Player._Hand.GetValues()[0] + " " + engine.Dealer._Hand.GetValues()[0] + " " + engine.Player.Balance + " " + engine.CurrentBetAmount);
+                engine.NewTurn(10); 
+                Console.WriteLine(engine.Me._Hand.GetValues()[0] + " " + engine.Dealer._Hand.GetValues()[0] + " " + engine.Me.Balance + " " + engine.CurrentBetAmount);
             }
-            
-
-
-            
-            
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            Console.ReadLine();
         }
     }
 }
