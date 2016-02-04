@@ -9,6 +9,7 @@ namespace BlackjackSimulation
     {
         //obsolete : CardsInHand
         public List<Card> AllCards;
+        public bool IsBusted;
 
         public Hand(bool isDealer)
         {

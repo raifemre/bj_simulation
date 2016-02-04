@@ -9,14 +9,20 @@ namespace BlackjackSimulation
     {
         static void Main(string[] args)
         {
-
+            int betAmount = 200;
             SimulationEngine engine = new SimulationEngine(8);
+
+            Console.WriteLine("Starting Balance: 10000 Bet Amount: {0}", betAmount);
+            Console.WriteLine();
 
             for (int i = 0; i < 30; i++)
             {
-                engine.NewTurn(10); 
-                Console.WriteLine(engine.Me._Hand.GetValues()[0] + " " + engine.Dealer._Hand.GetValues()[0] + " " + engine.Me.Balance + " " + engine.CurrentBetAmount);
+                engine.NewTurn(betAmount);
+                Console.WriteLine("P: {0}\tD: {1}\tBalance: {2}", engine.My._Hand.GetValues()[0], engine.Dealer._Hand.GetValues()[0], engine.My.Balance);
             }
+
+            Console.WriteLine("\nResult = {0}\n", engine.My.Balance - 10000);
+
         }
     }
 }
