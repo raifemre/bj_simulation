@@ -17,12 +17,11 @@ namespace BlackjackSimulation
 
             for (int i = 0; i < 30; i++)
             {
-                engine.NewTurn(betAmount);
+                engine.Start(betAmount);
                 Console.WriteLine("P: {0}\tD: {1}\tBalance: {2}", engine.My._Hand.GetValues()[0], engine.Dealer._Hand.GetValues()[0], engine.My.Balance);
             }
 
             Console.WriteLine("\nResult = {0}\n", engine.My.Balance - 10000);
-
         }
     }
 }

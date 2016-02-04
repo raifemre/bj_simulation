@@ -22,7 +22,7 @@ namespace BlackjackSimulation
             Dealer._Hand.IsBusted = false;
         }
 
-        public void NewTurn(int betAmount)
+        public void Start(int betAmount)
         {
             CurrentBetAmount = betAmount;
             My.Balance -= CurrentBetAmount;
