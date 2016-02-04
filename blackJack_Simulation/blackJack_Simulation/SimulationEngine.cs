@@ -180,6 +180,8 @@ namespace BlackjackSimulation
 
             // Report of each turn
             Console.WriteLine("P: {0}\tD: {1}\tBalance: {2}", My._Hand.GetValues()[0], Dealer._Hand.GetValues()[0], My.Balance);
+            int[] c = CurrentShoe.CardAmounts;
+            Console.WriteLine("Total:{0}\tA:{1}\t2:{2}\t3:{3}\t4:{4}\t5:{5}\t6:{6}\t7:{7}\t8:{8}\t9:{9}\t10:{10}\t", c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], c[8], c[9], c[10]+ c[11]+ c[12]+ c[13]);
 
             int BetStrategyResponse = 200;
 
