@@ -11,7 +11,7 @@ namespace BlackjackSimulation
         {
             int betAmount = 100;
             int profit = 0;
-            int iteration = 10000;
+            int iteration = 1000;
 
             List<Player> ExternalPlayers = new List<Player>();
 

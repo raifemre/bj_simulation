@@ -7,17 +7,20 @@ namespace BlackjackSimulation
 {
     class Hand
     {
-        //obsolete : CardsInHand
+        //List<Card>[] AllCards = new List<Card>[2]; - Split durumu için. List<Card> tutan bir array'e çevrilecek !
         public List<Card> AllCards;
         public bool IsBusted;
+        //public bool IsSplitted; ?
 
-        public Hand(bool isDealer)
+
+        //public bool IsDealer { get; private set; }
+
+        public Hand()
         {
             AllCards = new List<Card>();
-            IsDealer = isDealer;
+            //IsDealer = isDealer;
         }
 
-        public bool IsDealer { get; private set; }
 
         public void AddCard(Card card)
         {
