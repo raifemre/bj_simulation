@@ -43,27 +43,21 @@ namespace BlackjackSimulation
 
             foreach (Player _player in Players)
             {
-                for (int i = 0; i < 2; i++) // i = 0 da herkese dağıttı ve kartları düştü , i=1 de herkese dağıttı ama dealerın kartını düşmedi ancak totalden düştü. !! dealer 2. kartını açtığında bu kartta düşülmeli !!
+                for (int i = 0; i < 2; i++) //TODO: bunu yapmışız! i = 0 da herkese dağıttı ve kartları düştü , i=1 de herkese dağıttı ama dealerın kartını düşmedi ancak totalden düştü. !! dealer 2. kartını açtığında bu kartta düşülmeli !!
                 {
-                    if (i == 1)
-                    {
-                        CurrentShoe.Deal(_player._Hand);
-                        CurrentShoe.CardAmounts[0]--;
-                        if (!_player.IsDealer)
-                            CurrentShoe.CardAmounts[_player.LastCard().GetCardValue()]--;
-                    }
-                    else
-                    {
-                        CurrentShoe.Deal(_player._Hand);
-                        CurrentShoe.CardAmounts[0]--;
+
+                    CurrentShoe.Deal(_player._Hand);
+                    CurrentShoe.CardAmounts[0]--;
+                    if (i == 1 && !_player.IsDealer)
                         CurrentShoe.CardAmounts[_player.LastCard().GetCardValue()]--;
-                    }
+                    else
+                        CurrentShoe.CardAmounts[_player.LastCard().GetCardValue()]--;
 
                 }
 
             }
 
-            //TODO:[0] [1]
+            //TODO:[0] [1] -- hard ve soft ayrımı.
             if (My._Hand.GetValues()[0] == 21)
                 Turn(Dealer);
 
@@ -78,7 +72,7 @@ namespace BlackjackSimulation
                 if (totalCards > 2)
                 {
                     int currentCard = (int)currentPlayer._Hand.AllCards[totalCards - 1];
-                    CurrentShoe.CardAmounts[0]--;
+                    //TODO: CurrentShoe.CardAmounts[0]--; bunu zaten düşmedik mi başta? başta da düşmeyelim sonuçta kapalı kağıt, hem totalı hem card amountu burda düşelim bence !
                     CurrentShoe.CardAmounts[currentCard]--;
                 }
 
@@ -106,7 +100,7 @@ namespace BlackjackSimulation
                 }
 
                 //Logic implementation...
-                MoveAction move = Strategy.MoveStrategyResponse(My._Hand, Dealer._Hand.AllCards[1], new Hand[3] { new Hand(), new Hand(), new Hand() });
+                MoveAction move = Strategy.MoveStrategyResponse(My._Hand, Dealer._Hand.AllCards[1]); //, new Hand[3] { new Hand(), new Hand(), new Hand() });
 
                 switch (move)
                 {
@@ -142,7 +136,11 @@ namespace BlackjackSimulation
                             break;
                         }
                     case MoveAction.SPLIT:
-                        break;
+                        {
+                            currentPlayer._Hand.Split();
+                            //iyi düşünelim.
+                            break;
+                        }
                     default:
                         break;
                 }
@@ -171,6 +169,7 @@ namespace BlackjackSimulation
             if (PlayerWins)
             {
                 My.Balance += CurrentBetAmount * 2;
+                //TODO: HasBlackJack ekleyebiliriz Hand class'ına..
                 //if (PlayerTotal == 21) //Blackjack
                 //    My.Balance += CurrentBetAmount;
             }

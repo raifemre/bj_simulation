@@ -18,7 +18,7 @@ namespace BlackjackSimulation
 
         public Player(bool isDealer, bool isMe, int playStrategy, int betStrategy, int balance)
         {
-            //_Hand = new Hand(IsDealer);
+            //_Hand = new Hand(IsDealer);  - IsDealer yollamak pek mantıklı değil?, değiştirdim.
             _Hand = new Hand();
             IsDealer = isDealer;
             Balance = balance;

@@ -11,13 +11,14 @@ namespace BlackjackSimulation
         {
             int betAmount = 100;
             int profit = 0;
-            int iteration = 1000;
+            int iteration = 10000;
 
             List<Player> ExternalPlayers = new List<Player>();
+            SimulationEngine engine;
 
             for (int i = 0; i < iteration; i++)
             {
-                SimulationEngine engine = new SimulationEngine(8, ExternalPlayers);
+                engine = new SimulationEngine(8, ExternalPlayers);
                 engine.StartNewTurn(betAmount);
                 profit += engine.My.Balance - 10000;
             }

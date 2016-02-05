@@ -19,7 +19,6 @@
 
     static class CardValues
     {
-        //Extension Method - Süper Fikir !
         public static int GetCardValue(this Card card)
         {
             switch (card)
