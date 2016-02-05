@@ -13,6 +13,7 @@ namespace BlackjackSimulation
         public int CurrentBetAmount { get; private set; }
         public List<Player> Players { get; private set; }
         public int TotalTurns = 0;
+
         public SimulationEngine(int deckAmount, List<Player> externalPlayers)
         {
             CurrentShoe = new Shoe(deckAmount);
@@ -27,8 +28,6 @@ namespace BlackjackSimulation
             }
 
         }
-
-
 
         public void StartNewTurn(int betAmount)
         {
@@ -49,7 +48,7 @@ namespace BlackjackSimulation
                     {
                         CurrentShoe.Deal(_player._Hand);
                         CurrentShoe.CardAmounts[0]--;
-                        if(!_player.IsDealer)
+                        if (!_player.IsDealer)
                             CurrentShoe.CardAmounts[_player.LastCard().GetCardValue()]--;
                     }
                     else
@@ -58,7 +57,7 @@ namespace BlackjackSimulation
                         CurrentShoe.CardAmounts[0]--;
                         CurrentShoe.CardAmounts[_player.LastCard().GetCardValue()]--;
                     }
-                        
+
                 }
 
             }
@@ -105,8 +104,16 @@ namespace BlackjackSimulation
                     Turn(Dealer); //bu çok güzel olmadı.
                 }
 
+
+
                 //Logic implementation...
-                MoveAction move = MoveAction.STAND;
+                MoveAction move;
+
+                if (My._Hand.GetValues()[0] < 14)
+                    move = MoveAction.HIT;
+                else
+                    move = MoveAction.STAND;
+
 
                 switch (move)
                 {
@@ -171,17 +178,17 @@ namespace BlackjackSimulation
             if (PlayerWins)
             {
                 My.Balance += CurrentBetAmount * 2;
-                if (PlayerTotal == 21) //Blackjack
-                    My.Balance += CurrentBetAmount;
+                //if (PlayerTotal == 21) //Blackjack
+                //    My.Balance += CurrentBetAmount;
             }
 
             Dealer._Hand.IsBusted = false;
             My._Hand.IsBusted = false;
 
             // Report of each turn
-            Console.WriteLine("P: {0}\tD: {1}\tBalance: {2}", My._Hand.GetValues()[0], Dealer._Hand.GetValues()[0], My.Balance);
+            //Console.WriteLine("P: {0}\tD: {1}\tBalance: {2}", My._Hand.GetValues()[0], Dealer._Hand.GetValues()[0], My.Balance);
             int[] c = CurrentShoe.CardAmounts;
-            Console.WriteLine("Total:{0}\tA:{1}\t2:{2}\t3:{3}\t4:{4}\t5:{5}\t6:{6}\t7:{7}\t8:{8}\t9:{9}\t10:{10}\t", c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], c[8], c[9], c[10]+ c[11]+ c[12]+ c[13]);
+            //Console.WriteLine("Total:{0}\tA:{1}\t2:{2}\t3:{3}\t4:{4}\t5:{5}\t6:{6}\t7:{7}\t8:{8}\t9:{9}\t10:{10}\t", c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], c[8], c[9], c[10] + c[11] + c[12] + c[13]);
 
             int BetStrategyResponse = 200;
 
