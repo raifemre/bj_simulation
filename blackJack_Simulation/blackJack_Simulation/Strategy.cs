@@ -23,15 +23,29 @@ namespace BlackjackSimulation
         public static MoveAction MoveStrategyResponse(Hand playerHand, Card dealerUpCard)//, params Hand[] otherPlayersHands) //gerçi burda diğer oyuncuların elleriyle bi işimiz yok. turnuva stratejisi yaparsak kullanılır bu şekilde..
         {
             MoveAction moveResponse;
-            if (playerHand.AllCards[0] == playerHand.AllCards[1])
+            if(playerHand.AllCards.Count > 1) // split yapılmadı ise splite bak
             {
-                //Splitting strategy..
-            }
+                if (playerHand.AllCards[0] == playerHand.AllCards[1])
+                {
+                    moveResponse = MoveAction.HIT;
+                }
+                else if (playerHand.GetValues()[0] < 14)
+                {
 
-            if (playerHand.GetValues()[0] < 14)
-                moveResponse = MoveAction.HIT;
+                    moveResponse = MoveAction.HIT;
+                }
+                else
+                {
+                    moveResponse = MoveAction.STAND;
+                }
+            }
             else
-                moveResponse = MoveAction.STAND;
+            {
+                moveResponse = MoveAction.HIT;
+            }
+            
+                
+
             return moveResponse;
         }
     }

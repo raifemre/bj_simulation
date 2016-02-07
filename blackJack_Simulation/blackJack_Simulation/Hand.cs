@@ -10,20 +10,17 @@ namespace BlackjackSimulation
        //TODO: public List<Card>[] AllCards; - Bu şekilde bir array'e dönüştürmeliyiz Split durumu için.
         public List<Card> AllCards;
         public bool IsBusted;
-        public bool IsSplitted;
+        
+        public bool IsDone;
 
         public Hand()
         {
             //AllCards = new List<Card>[2];
             AllCards = new List<Card>();
+            IsDone = false;
         }
 
-        public void Split()
-        {
-            //2 farklı listeye bölünecek..
-            IsSplitted = true;
-        }
-
+     
         public void AddCard(Card card)
         {
             AllCards.Add(card);
