@@ -18,7 +18,7 @@ namespace BlackjackSimulation
             currentShoe = new Shoe(deckAmount);
             Players = externalPlayers;
             dealer = new Dealer(new DealerStandOnSoftSeventeen());
-            myPlayer = new Player(new B10MoveStrategy(), new B10BetStrategy(), 10000);
+            myPlayer = new Player(new BasicStrategy(), new B10BetStrategy(), 10000);
             Players.Add(myPlayer);
         }
 
@@ -77,9 +77,10 @@ namespace BlackjackSimulation
             {
                 if (!currentPlayer.Hands[i].IsCompleted)
                 {
-                    if (currentPlayer.Hands[i].GetValues()[0] > 21 && !currentPlayer.Hands[i].IsBusted)
+                    if (currentPlayer.Hands[i].GetValues()[0] > 21 && !currentPlayer.Hands[i].IsBusted)   // TODO: şurada bir problem var mesela hand splitted ilk el patladı ikinci ele giriyor ama total card olarak ilk elinkini alıyor ! continue ile alakalı bir prblem olabilirmi. continue olayını net bilmediğimden ellemedim. continue nereden çıkarıyor burada tam olarak ?
                     {
                         currentPlayer.Hands[i].IsBusted = true;
+
                         if (!currentPlayer.HasSplittedHand()) // split yapmadı ve patladıysa sıra bir sonraki oyuncuda/dealerda
                         {
                             currentPlayer.Hands[i].IsCompleted = true;
@@ -103,9 +104,9 @@ namespace BlackjackSimulation
                             currentPlayer.Hands[i].IsCompleted = true;
                             continue;
                         }
-
+                        
                         MoveAction move = currentPlayer.MoveStrategy.Response(currentPlayer.Hands[i], dealer._Hand.Cards[1], currentPlayer.HasSplittedHand());
-
+                        Console.WriteLine("Player: " + currentPlayer.Hands[i].GetValues()[0] +"   Dealer: " + dealer._Hand.GetValues()[0] + "   Response" + move);
                         //if (currentPlayer.HasSplittedHand() && move == MoveAction.Split)
                         //{
                         //    //  move = ??? , eğer splitted ise bidaha split yapmaması için move değiştirmek gerek. movestrageyt extra parameter isSplitted bool almalı diyorum onun için.
@@ -150,11 +151,13 @@ namespace BlackjackSimulation
                                 }
                             case MoveAction.Split:
                                 {
-                                    Console.WriteLine("SPLIT");
+                                    
                                     if (!currentPlayer.HasSplittedHand())
                                     {
                                         currentPlayer.SplitHand();
-                                        Turn(currentPlayer);
+                                        currentPlayer.Balance -= currentPlayer.BetAmount;
+                                         Turn(currentPlayer);
+                                        
                                     }
                                     break;
                                 }
@@ -220,6 +223,7 @@ namespace BlackjackSimulation
                         playerWins = true;
                     if (Players[i].Hands[j].IsBusted)
                         playerWins = false;
+
                     
                     if (playerWins)
                     {

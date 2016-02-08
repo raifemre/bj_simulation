@@ -15,9 +15,12 @@ namespace BlackjackSimulation
             List<Player> ExternalPlayers = new List<Player>();
             SimulationEngine engine;
 
-           
-            engine = new SimulationEngine(8, ExternalPlayers);
-            engine.StartNewTurn();
+            for (int i = 0; i < 10; i++)
+            {
+                engine = new SimulationEngine(8, ExternalPlayers);
+                engine.StartNewTurn();
+            }
+            
             
             Console.ReadLine();
         }

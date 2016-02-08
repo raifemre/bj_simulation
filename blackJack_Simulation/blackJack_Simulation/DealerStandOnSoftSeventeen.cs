@@ -15,7 +15,7 @@
             }
             else
             {
-                System.Console.WriteLine("Dealer Soft Hand");
+                //System.Console.WriteLine("Dealer Soft Hand");
                 return MoveAction.Hit;
             }
         }

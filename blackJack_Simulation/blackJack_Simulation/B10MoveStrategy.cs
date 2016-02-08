@@ -7,7 +7,7 @@
         {
             MoveAction moveResponse;
 
-            if (!HasSplittedHand && hand.Cards[0] == hand.Cards[1])
+            if (!HasSplittedHand && hand.Cards[0] == hand.Cards[1] && hand.Cards.Count == 2)
             {
                 moveResponse = MoveAction.Split;
             }
