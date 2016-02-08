@@ -12,13 +12,16 @@ namespace BlackjackSimulation
         private Dealer dealer;
         private List<Player> Players;
         private int totalTurns = 0;
+        private bool wonLastTurn = false;
+        private double balance = 10000.0;
+        private double initialBet = 100.0;
 
         public SimulationEngine(int deckAmount, List<Player> externalPlayers)
         {
             currentShoe = new Shoe(deckAmount);
             Players = externalPlayers;
             dealer = new Dealer(new DealerStandOnSoftSeventeen());
-            myPlayer = new Player(new BasicStrategy(), new B10BetStrategy(), 10000);
+            myPlayer = new Player(new BasicStrategy(), new Martingale(), balance, initialBet);
             Players.Add(myPlayer);
         }
 
@@ -32,7 +35,7 @@ namespace BlackjackSimulation
             for (int i = 0; i < Players.Count; i++)
             {
                 if (totalTurns > 1)
-                    Players[i].BetAmount *= Players[i].BetStrategy.Response();
+                    Players[i].BetAmount *= Players[i].BetStrategy.Response(wonLastTurn);
                 Players[i].Balance -= Players[i].BetAmount;
                 Players[i].ClearHands();
             }
@@ -77,9 +80,9 @@ namespace BlackjackSimulation
         {
             for (int i = 0; i < currentPlayer.Hands.Count; i++)
             {
-                if (!currentPlayer.Hands[i].IsCompleted || !currentPlayer.Hands[i].IsBusted)
+                if (!currentPlayer.Hands[i].IsCompleted)
                 {
-                    if (currentPlayer.Hands[i].GetValues()[0] > 21)
+                    if (currentPlayer.Hands[i].GetValues()[0] > 21 && !currentPlayer.Hands[i].IsBusted)
                     {
                         currentPlayer.Hands[i].IsBusted = true;
                         currentPlayer.Hands[i].IsCompleted = true;
@@ -112,8 +115,8 @@ namespace BlackjackSimulation
                             //continue;
                         }
                         
-                        MoveAction move = currentPlayer.MoveStrategy.Response(currentPlayer.Hands[i], dealer._Hand.Cards[1], currentPlayer.HasSplittedHand());
-                        Console.WriteLine("Player: {0:00}\tUpcard: {1:00}\t\tResponse: {2}", currentPlayer.Hands[i].GetValues()[0], dealer._Hand.Cards[0].GetCardValue(),move);
+                        MoveAction move = currentPlayer.MoveStrategy.Response(currentPlayer.Hands[i], dealer._Hand.Cards[0], currentPlayer.HasSplittedHand());
+                        Console.WriteLine("[{3}]Player: {0:00}\tUpcard: {1:00}\t\tResponse: {2}", currentPlayer.Hands[i].GetValues()[0], dealer._Hand.Cards[0].GetCardValue(),move,i);
                         //if (currentPlayer.HasSplittedHand() && move == MoveAction.Split)
                         //{
                         //    //  move = ??? , eğer splitted ise bidaha split yapmaması için move değiştirmek gerek. movestrageyt extra parameter isSplitted bool almalı diyorum onun için.
@@ -156,7 +159,7 @@ namespace BlackjackSimulation
                                     currentPlayer.Hands[i].IsCompleted = true;
                                     break;
                                 }
-                            case MoveAction.Split:
+                            case MoveAction.Split: //TODO : split üstüne split kontrolu
                                 {
                                     
                                     if (!currentPlayer.HasSplittedHand())
@@ -239,6 +242,12 @@ namespace BlackjackSimulation
                         {
                             Players[i].Balance += Players[i].BetAmount;
                         }
+                        wonLastTurn = true;
+                        myPlayer.BetAmount = initialBet;
+                    }
+                    else
+                    {
+                        wonLastTurn = false;
                     }
                 }
 
@@ -248,7 +257,7 @@ namespace BlackjackSimulation
                 //int[] c = currentShoe.CardAmounts;
                 //Console.WriteLine("Total:{0}\tA:{1}\t2:{2}\t3:{3}\t4:{4}\t5:{5}\t6:{6}\t7:{7}\t8:{8}\t9:{9}\t10:{10}\t", c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], c[8], c[9], c[10] + c[11] + c[12] + c[13]);
 
-                if (myPlayer.Balance >= myPlayer.BetStrategy.Response() && currentShoe.CardAmounts[0] > currentShoe.CutCardIndex)
+                if (myPlayer.Balance >= myPlayer.BetStrategy.Response(wonLastTurn) && currentShoe.CardAmounts[0] > currentShoe.CutCardIndex)
                     StartNewTurn();
             }
         }

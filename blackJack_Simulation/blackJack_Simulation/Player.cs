@@ -12,15 +12,16 @@ namespace BlackjackSimulation
         public IBetStrategy BetStrategy;
         public double Balance;
         public double BetAmount;
+        
 
-        public Player(IPlayerMoveStrategy moveStrategy, IBetStrategy betStrategy, int balance)
+        public Player(IPlayerMoveStrategy moveStrategy, IBetStrategy betStrategy, double balance, double betAmount)
         {
             Hands = new List<Hand>();
             Hands.Add(new Hand());
             MoveStrategy = moveStrategy;
             BetStrategy = betStrategy;
             Balance = balance;
-            BetAmount = balance / 100; // Default - Biraz özensiz oldu bu satır.
+            BetAmount = betAmount; 
         }
 
 

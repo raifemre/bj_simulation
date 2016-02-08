@@ -2,7 +2,7 @@
 {
     class B10BetStrategy : IBetStrategy
     {
-        public double Response()
+        public double Response(bool wonLastTurn)
         {
             return 1;
         }

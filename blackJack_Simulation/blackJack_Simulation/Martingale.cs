@@ -4,9 +4,12 @@
 
     class Martingale : IBetStrategy
     {
-        public double Response()
+        public double Response(bool wonLastTurn)
         {
-            return 2.0; // Current Bet Amount'unu *2 yap diye düşündüm, daha güzel yazılabilir?...
+            if (wonLastTurn)
+                return 1.0;
+            else
+                return 2.0;// Current Bet Amount'unu *2 yap diye düşündüm, daha güzel yazılabilir?...
         }
     }
 }

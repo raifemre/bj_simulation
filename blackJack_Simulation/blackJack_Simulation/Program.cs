@@ -13,12 +13,12 @@ namespace BlackjackSimulation
             Console.BackgroundColor = ConsoleColor.Black;
             Console.ForegroundColor = ConsoleColor.White;
 
-            List<Player> ExternalPlayers = new List<Player>();
+            
             SimulationEngine engine;
 
             for (int i = 0; i < 10; i++)
             {
-                engine = new SimulationEngine(8, ExternalPlayers);
+                engine = new SimulationEngine(8, new List<Player>());
                 engine.StartNewTurn();
             }
             

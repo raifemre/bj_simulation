@@ -84,10 +84,13 @@ namespace BlackjackSimulation
         public MoveAction Response(Hand hand, Card dealerUpCard, bool HasSplittedHand)
         {
             int playerHardTotal = hand.GetValues()[0];
-            if(hand.Cards.Count == 2 && !HasSplittedHand && hand.Cards[0].GetCardValue() == hand.Cards[1].GetCardValue())
+
+            // TODO: hand.getvalues lenght 2 ise hand softtur. 
+
+            if (hand.Cards.Count == 2 && !HasSplittedHand && hand.Cards[0].GetCardValue() == hand.Cards[1].GetCardValue())
             {
                 //Console.WriteLine("SPLIT POSSIBLE player: " + playerHardTotal + "  dealer: " + dealerUpCard.GetCardValue());
-                Console.WriteLine("Player: {0:00}\tUpcard: {1:00}\t\tResponse: SPLIT POSSIBLE", playerHardTotal, dealerUpCard.GetCardValue());
+                //Console.WriteLine("Player: {0:00}\tUpcard: {1:00}\t\tResponse: SPLIT POSSIBLE", playerHardTotal, dealerUpCard.GetCardValue());
                 return splitStrategy[playerHardTotal/2, dealerUpCard.GetCardValue()];
             }
             else

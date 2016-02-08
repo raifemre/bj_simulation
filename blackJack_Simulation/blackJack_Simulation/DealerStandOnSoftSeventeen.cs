@@ -4,9 +4,9 @@
     {
         public MoveAction Response(Hand hand)
         {
-            if (hand.GetValues().Length == 1) // TODO: no soft hand
+            if (hand.GetValues().Length == 2) // TODO: no soft hand
             {
-                if (hand.GetValues()[0] < 17)
+                if (hand.GetValues()[1] < 17)
                 {
                     return MoveAction.Hit;
                 }
@@ -16,7 +16,12 @@
             else
             {
                 //System.Console.WriteLine("Dealer Soft Hand");
-                return MoveAction.Hit;
+                if (hand.GetValues()[0] < 17)
+                {
+                    return MoveAction.Hit;
+                }
+                else
+                    return MoveAction.Stand;
             }
         }
     }
