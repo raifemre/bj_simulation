@@ -5,8 +5,6 @@ using System.Text;
 
 namespace BlackjackSimulation
 {
-    //TODO: http://www.blackjackclassroom.com/wp-content/uploads/2009/12/blackjack-basic-strategy.png
-
     class BasicStrategy : IPlayerMoveStrategy
     {
 
@@ -88,7 +86,8 @@ namespace BlackjackSimulation
             int playerHardTotal = hand.GetValues()[0];
             if(hand.Cards.Count == 2 && !HasSplittedHand && hand.Cards[0].GetCardValue() == hand.Cards[1].GetCardValue())
             {
-                Console.WriteLine("SPLIT POSSIBLE player: " + playerHardTotal + "  dealer: " + dealerUpCard.GetCardValue());
+                //Console.WriteLine("SPLIT POSSIBLE player: " + playerHardTotal + "  dealer: " + dealerUpCard.GetCardValue());
+                Console.WriteLine("Player: {0:00}\tUpcard: {1:00}\t\tResponse: SPLIT POSSIBLE", playerHardTotal, dealerUpCard.GetCardValue());
                 return splitStrategy[playerHardTotal/2, dealerUpCard.GetCardValue()];
             }
             else

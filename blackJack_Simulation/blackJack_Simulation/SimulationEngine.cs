@@ -25,7 +25,9 @@ namespace BlackjackSimulation
         public void StartNewTurn()
         {
             totalTurns++;
-            Console.WriteLine("Turn: {0:00} Balance: {1}", totalTurns, myPlayer.Balance);
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine(">>Turn: {0:00}\tBalance: {1}", totalTurns, myPlayer.Balance);
+            Console.ForegroundColor = ConsoleColor.White;
 
             for (int i = 0; i < Players.Count; i++)
             {
@@ -60,7 +62,7 @@ namespace BlackjackSimulation
                 {
                     Players[i].Hands[0].IsBlackjack = true;
                     Players[i].Hands[0].IsCompleted = true;
-                    continue;
+                    //continue;
                 }
                 else
                     Turn(Players[i]);
@@ -75,38 +77,43 @@ namespace BlackjackSimulation
         {
             for (int i = 0; i < currentPlayer.Hands.Count; i++)
             {
-                if (!currentPlayer.Hands[i].IsCompleted)
+                if (!currentPlayer.Hands[i].IsCompleted || !currentPlayer.Hands[i].IsBusted)
                 {
-                    if (currentPlayer.Hands[i].GetValues()[0] > 21 && !currentPlayer.Hands[i].IsBusted)   // TODO: şurada bir problem var mesela hand splitted ilk el patladı ikinci ele giriyor ama total card olarak ilk elinkini alıyor ! continue ile alakalı bir prblem olabilirmi. continue olayını net bilmediğimden ellemedim. continue nereden çıkarıyor burada tam olarak ?
+                    if (currentPlayer.Hands[i].GetValues()[0] > 21)
                     {
                         currentPlayer.Hands[i].IsBusted = true;
-
-                        if (!currentPlayer.HasSplittedHand()) // split yapmadı ve patladıysa sıra bir sonraki oyuncuda/dealerda
-                        {
-                            currentPlayer.Hands[i].IsCompleted = true;
-                            continue;
-                        }
-                        else  // split yapmış ve ilk eli patladıysa devam et ikinci ele bak. Eğer ikinci el patladı ise sıra bir sonraki oyuncuda/dealerda
-                        {
-                            if (i == 1)
-                            {
-                                currentPlayer.Hands[i].IsBusted = true;
-                                currentPlayer.Hands[i].IsCompleted = true;
-                                continue;
-                            }
-                        }
+                        currentPlayer.Hands[i].IsCompleted = true;
                     }
+                    //if (currentPlayer.Hands[i].GetValues()[0] > 21 && !currentPlayer.Hands[i].IsBusted)   // TODO: şurada bir problem var mesela hand splitted ilk el patladı ikinci ele giriyor ama total card olarak ilk elinkini alıyor ! continue ile alakalı bir prblem olabilirmi. continue olayını net bilmediğimden ellemedim. continue nereden çıkarıyor burada tam olarak ?
+                    //{
+                    //    currentPlayer.Hands[i].IsBusted = true;
+
+                    //    if (!currentPlayer.HasSplittedHand()) // split yapmadı ve patladıysa sıra bir sonraki oyuncuda/dealerda
+                    //    {
+                    //        currentPlayer.Hands[i].IsCompleted = true;
+                    //        continue;
+                    //    }
+                    //    else  // split yapmış ve ilk eli patladıysa devam et ikinci ele bak. Eğer ikinci el patladı ise sıra bir sonraki oyuncuda/dealerda
+                    //    {
+                    //        if (i == 1)
+                    //        {
+                    //            currentPlayer.Hands[i].IsBusted = true;
+                    //            currentPlayer.Hands[i].IsCompleted = true;
+                    //            continue;
+                    //        }
+                    //    }
+                    //}
                     else // Hand Value <= 21
                     {
                         if (currentPlayer.HasSplittedHand() && currentPlayer.Hands[i].Cards.Count == 2 && currentPlayer.Hands[i].GetValues()[0] == 21) //Splitted BJ ? Var mı böyle bir şey emin değilim.
                         {
                             currentPlayer.Hands[i].IsBlackjack = true;
                             currentPlayer.Hands[i].IsCompleted = true;
-                            continue;
+                            //continue;
                         }
                         
                         MoveAction move = currentPlayer.MoveStrategy.Response(currentPlayer.Hands[i], dealer._Hand.Cards[1], currentPlayer.HasSplittedHand());
-                        Console.WriteLine("Player: " + currentPlayer.Hands[i].GetValues()[0] +"   Dealer: " + dealer._Hand.GetValues()[0] + "   Response" + move);
+                        Console.WriteLine("Player: {0:00}\tUpcard: {1:00}\t\tResponse: {2}", currentPlayer.Hands[i].GetValues()[0], dealer._Hand.Cards[0].GetCardValue(),move);
                         //if (currentPlayer.HasSplittedHand() && move == MoveAction.Split)
                         //{
                         //    //  move = ??? , eğer splitted ise bidaha split yapmaması için move değiştirmek gerek. movestrageyt extra parameter isSplitted bool almalı diyorum onun için.
@@ -156,7 +163,7 @@ namespace BlackjackSimulation
                                     {
                                         currentPlayer.SplitHand();
                                         currentPlayer.Balance -= currentPlayer.BetAmount;
-                                         Turn(currentPlayer);
+                                        Turn(currentPlayer);
                                         
                                     }
                                     break;

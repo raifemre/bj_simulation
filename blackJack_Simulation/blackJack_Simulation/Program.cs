@@ -10,7 +10,8 @@ namespace BlackjackSimulation
         static void Main(string[] args)
         {
             //int betAmount = 100; -- Default = Balance / 100
-            
+            Console.BackgroundColor = ConsoleColor.Black;
+            Console.ForegroundColor = ConsoleColor.White;
 
             List<Player> ExternalPlayers = new List<Player>();
             SimulationEngine engine;
