@@ -64,7 +64,7 @@ namespace BlackjackSimulation
 
         public void Deal(Hand hand)
         {
-            Card card = Cards.Pop();//.GetCardValue(); ?
+            Card card = Cards.Pop();
             hand.AddCard(card);
         }
 

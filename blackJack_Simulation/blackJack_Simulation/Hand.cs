@@ -7,28 +7,28 @@ namespace BlackjackSimulation
 {
     class Hand
     {
-       //TODO: public List<Card>[] AllCards; - Bu şekilde bir array'e dönüştürmeliyiz Split durumu için.
-        public List<Card> AllCards;
+        public List<Card> Cards;
         public bool IsBusted;
-        
-        public bool IsDone;
+        public bool IsBlackjack;
+        public bool IsCompleted;
 
         public Hand()
         {
-            //AllCards = new List<Card>[2];
-            AllCards = new List<Card>();
-            IsDone = false;
+            Cards = new List<Card>();
         }
 
      
         public void AddCard(Card card)
         {
-            AllCards.Add(card);
+            Cards.Add(card);
         }
 
-        public void Clear()
+        public void ClearHand()
         {
-            AllCards.Clear();
+            Cards.Clear();
+            IsBusted = false;
+            IsBlackjack = false;
+            IsCompleted = false;
         }
 
         //[0] = total, [1] = softTotal
@@ -37,10 +37,10 @@ namespace BlackjackSimulation
             int total = 0, softTotal = 0;
             bool HasAce = false;
 
-            for (int i = 0; i < AllCards.Count; ++i)
+            for (int i = 0; i < Cards.Count; ++i)
             {
-                total += AllCards[i].GetCardValue();
-                if (AllCards[i] == Card.Ace)
+                total += Cards[i].GetCardValue();
+                if (Cards[i] == Card.Ace)
                     HasAce = true;
             }
             if (HasAce && total < 12)
