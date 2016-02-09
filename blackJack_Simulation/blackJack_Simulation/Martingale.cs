@@ -7,9 +7,9 @@
         public double Response(bool wonLastTurn)
         {
             if (wonLastTurn)
-                return 1.0;
+                return 1;
             else
-                return 2.0;// Current Bet Amount'unu *2 yap diye düşündüm, daha güzel yazılabilir?...
+                return 1;// Current Bet Amount'unu *2 yap diye düşündüm, daha güzel yazılabilir?...
         }
     }
 }

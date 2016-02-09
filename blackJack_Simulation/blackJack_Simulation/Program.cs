@@ -18,14 +18,14 @@ namespace BlackjackSimulation
             double totalEarnings = 0;
 
             
-            for (int i = 0; i < 10000; i++)
+            for (int i = 0; i < 100; i++)
             {
                 engine = new SimulationEngine(8, new List<Player>());
                 engine.StartNewTurn();
                 totalEarnings += engine.myPlayer.Balance;
             }
 
-            Console.WriteLine(totalEarnings / 10000); // 1. 8388 / 2. 8461  / 3. 8455 / 4. 8456 / 5. 8468  / 6. 8519 /  7. 8526  / 8. 8379 / 9. 8352  / 10. 8428
+            Console.WriteLine(totalEarnings / 100); // 1. 8388 / 2. 8461  / 3. 8455 / 4. 8456 / 5. 8468  / 6. 8519 /  7. 8526  / 8. 8379 / 9. 8352  / 10. 8428
             
             Console.ReadLine();
         }

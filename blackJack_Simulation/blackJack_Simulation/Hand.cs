@@ -11,6 +11,7 @@ namespace BlackjackSimulation
         public bool IsBusted;
         public bool IsBlackjack;
         public bool IsCompleted;
+        public bool IsDoubled;
 
         public Hand()
         {
@@ -29,6 +30,7 @@ namespace BlackjackSimulation
             IsBusted = false;
             IsBlackjack = false;
             IsCompleted = false;
+            IsDoubled = false;
         }
 
         //[0] = total, [1] = softTotal

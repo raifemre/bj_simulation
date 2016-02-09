@@ -135,6 +135,7 @@ namespace BlackjackSimulation
                                 }
                             case MoveAction.Double:
                                 {
+                                    currentPlayer.Hands[i].IsDoubled = true;
                                     //Splittedsa durumuna MoveStrategy.Response() içerisinde bakacağımız için, eğer splittedsa zaten Double dönmeyecektir.
                                     if (currentPlayer.Balance >= currentPlayer.BetAmount)
                                     {                                        
@@ -241,6 +242,10 @@ namespace BlackjackSimulation
                         if (Players[i].Hands[j].IsBlackjack)
                         {
                             Players[i].Balance += Players[i].BetAmount;
+                        }
+                        if (Players[i].Hands[j].IsDoubled)
+                        {
+                            Players[i].Balance += Players[i].BetAmount*2;
                         }
                         wonLastTurn = true;
                         myPlayer.BetAmount = initialBet;
