@@ -50,7 +50,7 @@ namespace BlackjackSimulation
                     currentShoe.CardAmounts[0]--;
                     currentShoe.CardAmounts[(int)Players[j].LastDealtCard()]--;
                 }
-                currentShoe.Deal(dealer._Hand);
+                currentShoe.Deal(dealer._Hand); // TODO: Dealer ilk kart A ikinci kart 10 ise oyunu oynatma
                 if (i == 0) //TODO: i == 1 (dealer's closed card) durumunu Turn(dealer) içerisinde yapıyoruz. - değiştirilebilir? - totalı da sonradan düşüyorum - konuşalım bunu.
                 {
                     currentShoe.CardAmounts[0]--;
@@ -235,7 +235,7 @@ namespace BlackjackSimulation
                     if (Players[i].Hands[j].IsBusted)
                         playerWins = false;
 
-                    
+                    //TODO : tie parası gelsin
                     if (playerWins)
                     {
                         Players[i].Balance += Players[i].BetAmount * 2;

@@ -88,7 +88,8 @@ namespace BlackjackSimulation
             MoveAction hardResponse = hardStrategy[playerHardTotal, dealerUpCard.GetCardValue()];
             MoveAction softResponse = softStrategy[playerHardTotal, dealerUpCard.GetCardValue()];
 
-            //  TODO: hand.getvalues lenght 2 ise hand softtur. 
+            //  TODO: KURALLAR SIMULASYONDA DURMALI !!
+            //  TODO: A,A SPLIT EDİLİRSE SADECE TEK KART VER SONRA STANDLE !!
 
             if (hand.Cards.Count == 2 && !HasSplittedHand && hand.Cards[0].GetCardValue() == hand.Cards[1].GetCardValue())  // Split Hands
             {
@@ -96,7 +97,7 @@ namespace BlackjackSimulation
             }
             else if(hand.GetValues().Length > 1) // Soft hands
             {
-                if(softResponse == MoveAction.Double && hand.Cards.Count > 2 && !HasSplittedHand || hardResponse == MoveAction.Double && HasSplittedHand)   // 1. response double + kart sayısı 2 den fazla ise = HIT  2. hand splitted + response double = HIT 
+                if((softResponse == MoveAction.Double && hand.Cards.Count > 2 && !HasSplittedHand) || (softResponse == MoveAction.Double && HasSplittedHand))   // 1. response double + kart sayısı 2 den fazla ise = HIT  2. hand splitted + response double = HIT 
                 {
                     return MoveAction.Hit;
                 }
@@ -107,7 +108,7 @@ namespace BlackjackSimulation
             }
             else // Hard hands
             {
-                if (hardResponse == MoveAction.Double && hand.Cards.Count > 2 && !HasSplittedHand || hardResponse == MoveAction.Double && HasSplittedHand) // TODO: 6,6 split ten sonra birdaha 6 gelirse double yapıyor ??!
+                if ((hardResponse == MoveAction.Double && hand.Cards.Count > 2 && !HasSplittedHand) || (hardResponse == MoveAction.Double && HasSplittedHand)) // TODO: 6,6 split ten sonra birdaha 6 gelirse double yapıyor ??!
                 {
                     return MoveAction.Hit;
                 }
