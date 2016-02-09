@@ -96,7 +96,7 @@ namespace BlackjackSimulation
             }
             else if(hand.GetValues().Length > 1) // Soft hands
             {
-                if(softResponse == MoveAction.Double && hand.Cards.Count > 2 && !HasSplittedHand)   // 1. response double + kart sayısı 2 den fazla ise = HIT  2. hand splitted + response double = HIT 
+                if(softResponse == MoveAction.Double && hand.Cards.Count > 2 && !HasSplittedHand || hardResponse == MoveAction.Double && HasSplittedHand)   // 1. response double + kart sayısı 2 den fazla ise = HIT  2. hand splitted + response double = HIT 
                 {
                     return MoveAction.Hit;
                 }
@@ -107,7 +107,7 @@ namespace BlackjackSimulation
             }
             else // Hard hands
             {
-                if (hardResponse == MoveAction.Double && hand.Cards.Count > 2 && !HasSplittedHand)
+                if (hardResponse == MoveAction.Double && hand.Cards.Count > 2 && !HasSplittedHand || hardResponse == MoveAction.Double && HasSplittedHand) // TODO: 6,6 split ten sonra birdaha 6 gelirse double yapıyor ??!
                 {
                     return MoveAction.Hit;
                 }
