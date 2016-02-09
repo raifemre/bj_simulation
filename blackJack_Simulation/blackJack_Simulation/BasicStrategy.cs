@@ -85,19 +85,39 @@ namespace BlackjackSimulation
         {
             int playerHardTotal = hand.GetValues()[0];
 
-            // TODO: hand.getvalues lenght 2 ise hand softtur. 
+            MoveAction hardResponse = hardStrategy[playerHardTotal, dealerUpCard.GetCardValue()];
+            MoveAction softResponse = softStrategy[playerHardTotal, dealerUpCard.GetCardValue()];
 
-            if (hand.Cards.Count == 2 && !HasSplittedHand && hand.Cards[0].GetCardValue() == hand.Cards[1].GetCardValue())
+            //  TODO: hand.getvalues lenght 2 ise hand softtur. 
+
+            if (hand.Cards.Count == 2 && !HasSplittedHand && hand.Cards[0].GetCardValue() == hand.Cards[1].GetCardValue())  // Split Hands
             {
-                //Console.WriteLine("SPLIT POSSIBLE player: " + playerHardTotal + "  dealer: " + dealerUpCard.GetCardValue());
-                //Console.WriteLine("Player: {0:00}\tUpcard: {1:00}\t\tResponse: SPLIT POSSIBLE", playerHardTotal, dealerUpCard.GetCardValue());
                 return splitStrategy[playerHardTotal/2, dealerUpCard.GetCardValue()];
             }
-            else
+            else if(hand.GetValues().Length > 1) // Soft hands
             {
-                return hardStrategy[playerHardTotal, dealerUpCard.GetCardValue()];
+                if(softResponse == MoveAction.Double && hand.Cards.Count > 2 && !HasSplittedHand)   // 1. response double + kart sayısı 2 den fazla ise = HIT  2. hand splitted + response double = HIT 
+                {
+                    return MoveAction.Hit;
+                }
+                else
+                {
+                    return softResponse;
+                }
+            }
+            else // Hard hands
+            {
+                if (hardResponse == MoveAction.Double && hand.Cards.Count > 2 && !HasSplittedHand)
+                {
+                    return MoveAction.Hit;
+                }
+                else
+                {
+                    return hardResponse;
+                }
             }
             
         }
     }
 }
+ 

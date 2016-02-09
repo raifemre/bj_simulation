@@ -8,7 +8,7 @@ namespace BlackjackSimulation
     class SimulationEngine
     {
         private Shoe currentShoe;
-        private Player myPlayer;
+        public Player myPlayer;
         private Dealer dealer;
         private List<Player> Players;
         private int totalTurns = 0;
@@ -29,7 +29,7 @@ namespace BlackjackSimulation
         {
             totalTurns++;
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(">>Turn: {0:00}\tBalance: {1}", totalTurns, myPlayer.Balance);
+            //Console.WriteLine(">>Turn: {0:00}\tBalance: {1}", totalTurns, myPlayer.Balance);
             Console.ForegroundColor = ConsoleColor.White;
 
             for (int i = 0; i < Players.Count; i++)
@@ -116,7 +116,7 @@ namespace BlackjackSimulation
                         }
                         
                         MoveAction move = currentPlayer.MoveStrategy.Response(currentPlayer.Hands[i], dealer._Hand.Cards[0], currentPlayer.HasSplittedHand());
-                        Console.WriteLine("[{3}]Player: {0:00}\tUpcard: {1:00}\t\tResponse: {2}", currentPlayer.Hands[i].GetValues()[0], dealer._Hand.Cards[0].GetCardValue(),move,i);
+                        //Console.WriteLine("[{3}]Player: {0:00}\tUpcard: {1:00}\t\tResponse: {2}", currentPlayer.Hands[i].GetValues()[0], dealer._Hand.Cards[0].GetCardValue(),move,i);
                         //if (currentPlayer.HasSplittedHand() && move == MoveAction.Split)
                         //{
                         //    //  move = ??? , eğer splitted ise bidaha split yapmaması için move değiştirmek gerek. movestrageyt extra parameter isSplitted bool almalı diyorum onun için.
@@ -258,7 +258,14 @@ namespace BlackjackSimulation
                 //Console.WriteLine("Total:{0}\tA:{1}\t2:{2}\t3:{3}\t4:{4}\t5:{5}\t6:{6}\t7:{7}\t8:{8}\t9:{9}\t10:{10}\t", c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], c[8], c[9], c[10] + c[11] + c[12] + c[13]);
 
                 if (myPlayer.Balance >= myPlayer.BetStrategy.Response(wonLastTurn) && currentShoe.CardAmounts[0] > currentShoe.CutCardIndex)
+                {
                     StartNewTurn();
+                }
+                else
+                {
+                    Console.WriteLine(">>Balance: {0}", myPlayer.Balance);
+                }
+                    
             }
         }
     }
