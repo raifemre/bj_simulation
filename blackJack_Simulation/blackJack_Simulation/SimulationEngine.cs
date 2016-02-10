@@ -246,6 +246,7 @@ namespace BlackjackSimulation
         public void EndTurn()
         {
             int dealerTotal = dealer._Hand.GetValues()[0];
+            if (dealer._Hand.GetValues().Length == 2) dealerTotal = dealer._Hand.GetValues()[1]; // softsa softu al
             bool isTie = false;
 
             for (int i = 0; i < Players.Count; i++)
@@ -279,7 +280,7 @@ namespace BlackjackSimulation
                         wonLastTurn = true;
                         myPlayer.BetAmount = initialBet;
                         Console.BackgroundColor = ConsoleColor.DarkBlue;
-                        Console.WriteLine("[{2}]Player: {0:00}\tUpcard: {1:00}\t\tWinner: PLAYER", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                        Console.WriteLine("[{2}]Player: {0:00}\tDealer: {1:00}\t\tWinner: PLAYER", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
                         Console.BackgroundColor = ConsoleColor.Black;
                     }
                     else if (isTie)
@@ -288,11 +289,18 @@ namespace BlackjackSimulation
                         {
                             // berabere ancak dealer ilk iki kartta 21 yaptıysa sen 3 kartla 21 yapıysan tie parası alamazsın !
                         }
+                        else if (Players[i].Hands[j].IsBlackjack && dealer._Hand.Cards.Count > 2)  // Playerın BJ yapma + Dealer ın 2 den fazla kartla 21 i bulma  durumu
+                        {
+                            Players[i].Balance += Players[i].BetAmount*2.5;
+                            Console.BackgroundColor = ConsoleColor.DarkBlue;
+                            Console.WriteLine("[{2}]Player: {0:00}\tDealer: {1:00}\t\tWinner: PLAYER", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                            Console.BackgroundColor = ConsoleColor.Black;
+                        }
                         else
                         {
                             Players[i].Balance += Players[i].BetAmount;
                             Console.BackgroundColor = ConsoleColor.DarkBlue;
-                            Console.WriteLine("[{2}]Player: {0:00}\tUpcard: {1:00}\t\tWinner: NONE", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                            Console.WriteLine("[{2}]Player: {0:00}\tDealer: {1:00}\t\tWinner: NONE", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
                             Console.BackgroundColor = ConsoleColor.Black;
                         }
                         
@@ -301,7 +309,7 @@ namespace BlackjackSimulation
                     {
                         wonLastTurn = false;
                         Console.BackgroundColor = ConsoleColor.DarkBlue;
-                        Console.WriteLine("[{2}]Player: {0:00}\tUpcard: {1:00}\t\tWinner: DEALER", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                        Console.WriteLine("[{2}]Player: {0:00}\tDealer: {1:00}\t\tWinner: DEALER", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
                         Console.BackgroundColor = ConsoleColor.Black;
                     }
                 }
