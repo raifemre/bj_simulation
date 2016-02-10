@@ -84,40 +84,32 @@ namespace BlackjackSimulation
         public MoveAction Response(Hand hand, Card dealerUpCard, bool HasSplittedHand)
         {
             int playerHardTotal = hand.GetValues()[0];
+            bool hasSoftHand = false;
+
+            for (int i = 0; i < hand.Cards.Count; i++)
+            {
+                if (hand.Cards[i].GetCardValue() == 1) hasSoftHand = true;
+            }
 
             MoveAction hardResponse = hardStrategy[playerHardTotal, dealerUpCard.GetCardValue()];
             MoveAction softResponse = softStrategy[playerHardTotal, dealerUpCard.GetCardValue()];
 
-            //  TODO: KURALLAR SIMULASYONDA DURMALI !!
-            //  TODO: A,A SPLIT EDİLİRSE SADECE TEK KART VER SONRA STANDLE !!
+            //  TODO: KURALLAR SIMULASYONDA DURMALI !! yapıldı.
+            //  TODO: A,A SPLIT EDİLİRSE SADECE TEK KART VER SONRA STANDLE !!  .yapıldı.
 
             if (hand.Cards.Count == 2 && !HasSplittedHand && hand.Cards[0].GetCardValue() == hand.Cards[1].GetCardValue())  // Split Hands
             {
                 return splitStrategy[playerHardTotal/2, dealerUpCard.GetCardValue()];
             }
-            else if(hand.GetValues().Length > 1) // Soft hands
+            else if (hasSoftHand)
             {
-                if((softResponse == MoveAction.Double && hand.Cards.Count > 2 && !HasSplittedHand) || (softResponse == MoveAction.Double && HasSplittedHand))   // 1. response double + kart sayısı 2 den fazla ise = HIT  2. hand splitted + response double = HIT 
-                {
-                    return MoveAction.Hit;
-                }
-                else
-                {
-                    return softResponse;
-                }
+                return softResponse;
             }
-            else // Hard hands
+            else
             {
-                if ((hardResponse == MoveAction.Double && hand.Cards.Count > 2 && !HasSplittedHand) || (hardResponse == MoveAction.Double && HasSplittedHand)) // TODO: 6,6 split ten sonra birdaha 6 gelirse double yapıyor ??!
-                {
-                    return MoveAction.Hit;
-                }
-                else
-                {
-                    return hardResponse;
-                }
+                return hardResponse;
             }
-            
+  
         }
     }
 }

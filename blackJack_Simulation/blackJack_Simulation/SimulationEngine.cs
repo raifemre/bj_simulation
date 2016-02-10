@@ -29,7 +29,7 @@ namespace BlackjackSimulation
         {
             totalTurns++;
             Console.ForegroundColor = ConsoleColor.Yellow;
-            //Console.WriteLine(">>Turn: {0:00}\tBalance: {1}", totalTurns, myPlayer.Balance);
+            Console.WriteLine(">>Turn: {0:00}\tBalance: {1}", totalTurns, myPlayer.Balance);
             Console.ForegroundColor = ConsoleColor.White;
 
             for (int i = 0; i < Players.Count; i++)
@@ -55,6 +55,15 @@ namespace BlackjackSimulation
                 {
                     currentShoe.CardAmounts[0]--;
                     currentShoe.CardAmounts[(int)dealer._Hand.Cards[0]]--;
+                }
+                if(i == 1)
+                {
+                    if(dealer._Hand.Cards[0] == Card.Ace && dealer._Hand.Cards[1].GetCardValue() == 10)
+                    {
+                        int closedCard = (int)dealer._Hand.Cards[1];
+                        currentShoe.CardAmounts[closedCard]--;
+                        EndTurn();
+                    }
                 }
             }
 
@@ -116,12 +125,25 @@ namespace BlackjackSimulation
                         }
                         
                         MoveAction move = currentPlayer.MoveStrategy.Response(currentPlayer.Hands[i], dealer._Hand.Cards[0], currentPlayer.HasSplittedHand());
-                        //Console.WriteLine("[{3}]Player: {0:00}\tUpcard: {1:00}\t\tResponse: {2}", currentPlayer.Hands[i].GetValues()[0], dealer._Hand.Cards[0].GetCardValue(),move,i);
+
                         //if (currentPlayer.HasSplittedHand() && move == MoveAction.Split)
                         //{
                         //    //  move = ??? , eğer splitted ise bidaha split yapmaması için move değiştirmek gerek. movestrageyt extra parameter isSplitted bool almalı diyorum onun için.
                         //    // Response içerisinde hallederiz artık..
                         //}
+
+                        if ((move == MoveAction.Double && currentPlayer.Hands[i].Cards.Count > 2 && !currentPlayer.HasSplittedHand()) || (move == MoveAction.Double && currentPlayer.HasSplittedHand()))   // 1. response double + kart sayısı 2 den fazla ise = HIT  2. hand splitted + response double = HIT 
+                        {
+                            move =  MoveAction.Hit;
+                           // Console.WriteLine("changed");
+                        }
+
+                        if (currentPlayer.HasSplittedHand() && currentPlayer.Hands[i].Cards.Count == 2 && currentPlayer.Hands[i].Cards[0] == Card.Ace) // A,A split durumunda 2 kartım varsa artık kart alma stand yap
+                        {
+                            move = MoveAction.Stand;
+                        }
+
+                        Console.WriteLine("[{3}]Player: {0:00}\tUpcard: {1:00}\t\tResponse: {2}", currentPlayer.Hands[i].GetValues()[0], dealer._Hand.Cards[0].GetCardValue(), move, i);
 
                         switch (move)
                         {
@@ -187,7 +209,7 @@ namespace BlackjackSimulation
                 currentDealer.TurnClosedCard();
                 int closedCard = (int)currentDealer._Hand.Cards[1];
                 currentShoe.CardAmounts[closedCard]--;
-                currentShoe.CardAmounts[0]--; //TODO: Total'ı da burada düşüyorum - konuşalım bunu.
+                // currentShoe.CardAmounts[0]--; //TODO: Total'ı da burada düşüyorum - konuşalım bunu. Bunu zaten başta düşmedinmi ?
             }
 
             if (currentDealer._Hand.GetValues()[0] > 21)
@@ -220,6 +242,7 @@ namespace BlackjackSimulation
         public void EndTurn()
         {
             int dealerTotal = dealer._Hand.GetValues()[0];
+            bool isTie = false;
 
             for (int i = 0; i < Players.Count; i++)
             {
@@ -230,12 +253,14 @@ namespace BlackjackSimulation
                     bool playerWins = false;
                     if (playerTotal > dealerTotal)
                         playerWins = true;
+                    if (playerTotal == dealerTotal)
+                        isTie = true;
                     if (dealer._Hand.IsBusted)
                         playerWins = true;
                     if (Players[i].Hands[j].IsBusted)
                         playerWins = false;
 
-                    //TODO : tie parası gelsin
+                    //TODO : tie parası gelsin . yapıldı.
                     if (playerWins)
                     {
                         Players[i].Balance += Players[i].BetAmount * 2;
@@ -249,10 +274,25 @@ namespace BlackjackSimulation
                         }
                         wonLastTurn = true;
                         myPlayer.BetAmount = initialBet;
+                        Console.WriteLine("[{2}]Player: {0:00}\tUpcard: {1:00}\t\tWinner: Player", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                    }
+                    else if (isTie)
+                    {
+                        if (!Players[i].Hands[j].IsBlackjack && dealer._Hand.Cards.Count == 2)
+                        {
+                            // berabere ancak dealer ilk iki kartta 21 yaptıysa sen 3 kartla 21 yapıysan tie parası alamazsın !
+                        }
+                        else
+                        {
+                            Players[i].Balance += Players[i].BetAmount;
+                            Console.WriteLine("[{2}]Player: {0:00}\tUpcard: {1:00}\t\tWinner: None", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                        }
+                        
                     }
                     else
                     {
                         wonLastTurn = false;
+                        Console.WriteLine("[{2}]Player: {0:00}\tUpcard: {1:00}\t\tWinner: Dealer", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
                     }
                 }
 
