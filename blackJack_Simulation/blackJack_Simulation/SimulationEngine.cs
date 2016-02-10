@@ -74,7 +74,9 @@ namespace BlackjackSimulation
                 {
                     Players[i].Hands[0].IsBlackjack = true;
                     Players[i].Hands[0].IsCompleted = true;
-                    //continue;
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("Player: {0:00}\tUpcard: {1:00}\t\tBLACKJACK", Players[i].Hands[0].GetValues()[0], dealer._Hand.Cards[0].GetCardValue());
+                    Console.ForegroundColor = ConsoleColor.White;
                 }
                 else
                     Turn(Players[i]);
@@ -95,6 +97,7 @@ namespace BlackjackSimulation
                     {
                         currentPlayer.Hands[i].IsBusted = true;
                         currentPlayer.Hands[i].IsCompleted = true;
+                        Console.WriteLine("[{0}]Player: {1:00}\tUpcard: {2:00}\t\tBUSTED", i, currentPlayer.Hands[i].GetValues()[0], dealer._Hand.Cards[0].GetCardValue());
                     }
                     //if (currentPlayer.Hands[i].GetValues()[0] > 21 && !currentPlayer.Hands[i].IsBusted)   // TODO: şurada bir problem var mesela hand splitted ilk el patladı ikinci ele giriyor ama total card olarak ilk elinkini alıyor ! continue ile alakalı bir prblem olabilirmi. continue olayını net bilmediğimden ellemedim. continue nereden çıkarıyor burada tam olarak ?
                     //{
@@ -219,6 +222,7 @@ namespace BlackjackSimulation
             }
 
             MoveAction move = dealer.MoveStrategy.Response(currentDealer._Hand);
+            Console.WriteLine("\t\tDealer: {0:00}\t\tResponse: {1}", dealer._Hand.GetValues()[0], move);
 
             switch (move)
             {
@@ -274,7 +278,9 @@ namespace BlackjackSimulation
                         }
                         wonLastTurn = true;
                         myPlayer.BetAmount = initialBet;
-                        Console.WriteLine("[{2}]Player: {0:00}\tUpcard: {1:00}\t\tWinner: Player", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                        Console.BackgroundColor = ConsoleColor.DarkBlue;
+                        Console.WriteLine("[{2}]Player: {0:00}\tUpcard: {1:00}\t\tWinner: PLAYER", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                        Console.BackgroundColor = ConsoleColor.Black;
                     }
                     else if (isTie)
                     {
@@ -285,14 +291,18 @@ namespace BlackjackSimulation
                         else
                         {
                             Players[i].Balance += Players[i].BetAmount;
-                            Console.WriteLine("[{2}]Player: {0:00}\tUpcard: {1:00}\t\tWinner: None", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                            Console.BackgroundColor = ConsoleColor.DarkBlue;
+                            Console.WriteLine("[{2}]Player: {0:00}\tUpcard: {1:00}\t\tWinner: NONE", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                            Console.BackgroundColor = ConsoleColor.Black;
                         }
                         
                     }
                     else
                     {
                         wonLastTurn = false;
-                        Console.WriteLine("[{2}]Player: {0:00}\tUpcard: {1:00}\t\tWinner: Dealer", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                        Console.BackgroundColor = ConsoleColor.DarkBlue;
+                        Console.WriteLine("[{2}]Player: {0:00}\tUpcard: {1:00}\t\tWinner: DEALER", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                        Console.BackgroundColor = ConsoleColor.Black;
                     }
                 }
 
@@ -308,7 +318,7 @@ namespace BlackjackSimulation
                 }
                 else
                 {
-                    Console.WriteLine(">>Balance: {0}", myPlayer.Balance);
+                    //Console.WriteLine(">>Balance: {0}", myPlayer.Balance);
                 }
                     
             }
