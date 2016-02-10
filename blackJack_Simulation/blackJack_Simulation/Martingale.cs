@@ -4,7 +4,7 @@
 
     class Martingale : IBetStrategy
     {
-        public double Response(bool wonLastTurn)
+        public double Response(double initialBet, bool wonLastTurn, int[] cardAmounts)
         {
             if (wonLastTurn)
                 return 1;

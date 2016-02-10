@@ -2,7 +2,7 @@
 {
     class B10BetStrategy : IBetStrategy
     {
-        public double Response(bool wonLastTurn)
+        public double Response(double initialBet , bool wonLastTurn, int[] cardAmounts)
         {
             return 1;
         }

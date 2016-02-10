@@ -21,7 +21,7 @@ namespace BlackjackSimulation
             currentShoe = new Shoe(deckAmount);
             Players = externalPlayers;
             dealer = new Dealer(new DealerStandOnSoftSeventeen());
-            myPlayer = new Player(new BasicStrategy(), new Martingale(), balance, initialBet);
+            myPlayer = new Player(new BasicStrategy(), new HiLoBetStrategy(), balance, initialBet);
             Players.Add(myPlayer);
         }
 
@@ -29,16 +29,17 @@ namespace BlackjackSimulation
         {
             totalTurns++;
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine(">>Turn: {0:00}\tBalance: {1}", totalTurns, myPlayer.Balance);
             Console.ForegroundColor = ConsoleColor.White;
 
             for (int i = 0; i < Players.Count; i++)
             {
                 if (totalTurns > 1)
-                    Players[i].BetAmount *= Players[i].BetStrategy.Response(wonLastTurn);
+                    Players[i].BetAmount *= Players[i].BetStrategy.Response(initialBet , wonLastTurn, currentShoe.CardAmounts);
                 Players[i].Balance -= Players[i].BetAmount;
                 Players[i].ClearHands();
             }
+
+            Console.WriteLine(">>Turn: {0:00}\tBalance: {1}\tBetAmount: {2}", totalTurns, myPlayer.Balance, myPlayer.BetAmount);
 
             dealer.ClearHand();
 
@@ -212,7 +213,7 @@ namespace BlackjackSimulation
                 currentDealer.TurnClosedCard();
                 int closedCard = (int)currentDealer._Hand.Cards[1];
                 currentShoe.CardAmounts[closedCard]--;
-                // currentShoe.CardAmounts[0]--; //TODO: Total'ı da burada düşüyorum - konuşalım bunu. Bunu zaten başta düşmedinmi ?
+                currentShoe.CardAmounts[0]--; //TODO: Total'ı da burada düşüyorum - konuşalım bunu. Bunu zaten başta düşmedinmi ?
             }
 
             if (currentDealer._Hand.GetValues()[0] > 21)
@@ -320,7 +321,7 @@ namespace BlackjackSimulation
                 //int[] c = currentShoe.CardAmounts;
                 //Console.WriteLine("Total:{0}\tA:{1}\t2:{2}\t3:{3}\t4:{4}\t5:{5}\t6:{6}\t7:{7}\t8:{8}\t9:{9}\t10:{10}\t", c[0], c[1], c[2], c[3], c[4], c[5], c[6], c[7], c[8], c[9], c[10] + c[11] + c[12] + c[13]);
 
-                if (myPlayer.Balance >= myPlayer.BetStrategy.Response(wonLastTurn) && currentShoe.CardAmounts[0] > currentShoe.CutCardIndex)
+                if (myPlayer.Balance >= myPlayer.BetStrategy.Response(initialBet, wonLastTurn, currentShoe.CardAmounts) && currentShoe.CardAmounts[0] > currentShoe.CutCardIndex)
                 {
                     StartNewTurn();
                 }
