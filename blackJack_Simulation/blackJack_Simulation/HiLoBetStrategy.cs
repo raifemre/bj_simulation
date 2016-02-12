@@ -45,11 +45,11 @@ namespace BlackjackSimulation
                 }
             }
 
-            RemainingDeck = (double)cardAmounts[0] / 52;
+            RemainingDeck = (double)cardAmounts[0] / 52 ;
             TrueCount = RunningCount / RemainingDeck;
-            Console.WriteLine("Running Count: {0}\t True Count: {1} ", RunningCount, TrueCount);
+            //Console.WriteLine("Running Count: {0}\t True Count: {1} ", RunningCount, TrueCount);
             if (TrueCount < 1) TrueCount = 1;
-            return TrueCount;
+            return 1;
         }
     }
 }
