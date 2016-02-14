@@ -12,13 +12,13 @@ namespace Combinations
         public static void Main(string[] args)
         {
 
-        
+
 
             List<int> numbers = new List<int>() { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 
 
 
-           
+
 
             //dortlu_comb(numbers, upcard, target);
 
@@ -39,6 +39,7 @@ namespace Combinations
                 return;
             }
             Console.SetOut(writer);
+
             for (int j = 2; j < 12; j++)
             {
                 Console.WriteLine();
@@ -68,7 +69,7 @@ namespace Combinations
 
             if ((target - upcard) < 12)
                 Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) + ", (target - upcard));
-                //Console.WriteLine(target - upcard);
+            //Console.WriteLine(target - upcard);
 
         }
 
@@ -83,11 +84,11 @@ namespace Combinations
                 if (upcard + i < 17)
                     if (!(i == 1 && upcard + 11 > 16))
                         if (((target - upcard - i) < 12 && (target - upcard - i) > 0) || ((i == 1) && (target - upcard - 11) < 12))
-                            
-                           
 
-                if (i == (target - upcard - i))
-                {
+
+
+                            if (i == (target - upcard - i))
+                            {
                                 if ((target - upcard - i) > 10)
                                 {
                                     Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * ((cardAmounts[{1}]-1) / (cardAmounts[0]-1)) + ", i, (target - upcard - i - 10));
@@ -96,10 +97,10 @@ namespace Combinations
                                 {
                                     Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * ((cardAmounts[{1}]-1) / (cardAmounts[0]-1)) + ", i, (target - upcard - i));
                                 }
-                                
+
                             }
-                else
-                {
+                            else
+                            {
 
                                 if ((target - upcard - i) > 10)
                                 {
@@ -109,7 +110,7 @@ namespace Combinations
                                 {
                                     Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) + ", i, (target - upcard - i));
                                 }
-                                
+
                             }
 
             }
@@ -125,84 +126,74 @@ namespace Combinations
                         if (!(i == 1 && upcard + 11 > 16))
                             if (!(i == 1 && upcard + 11 + j > 16))
                                 if (!(j == 1 && (upcard + i + 11 > 16 && (upcard + i) < 11)))
-                                    if (((target - upcard - i - j) < 12 && (target - upcard - i - j) > 0) || ((i==1) && (target - upcard - 11 - j) < 12))
-
-                                      
-                    
+                                    if (((target - upcard - i - j) < 12 && (target - upcard - i - j) > 0) || ((i == 1) && (target - upcard - 11 - j) < 12))
 
 
+                                        if (i == j && i == (target - upcard - i - j))
+                                        {
+                                            if ((target - upcard - i - j) > 10)
+                                            {
+                                                Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * ((cardAmounts[{1}]-1) / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-2) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j - 10));
+                                            }
+                                            else
+                                            {
+                                                Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * ((cardAmounts[{1}]-1) / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-2) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
+                                            }
 
-
-
-
-
-
-
-                    if (i == j && i == (target - upcard - i - j))
-                    {
-                        if ((target - upcard - i - j) > 10)
-                        {
-                            Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * ((cardAmounts[{1}]-1) / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-2) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j - 10));
-                        }
-                        else
-                        {
-                            Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * ((cardAmounts[{1}]-1) / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-2) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
-                        }
-
-                        //    Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * ((cardAmounts[{1}]-1) / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-2) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
-                    }
-                    else if (i == (target - upcard - i - j))
-                    {
-                        if ((target - upcard - i - j) > 10)
-                        {
+                                            //    Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * ((cardAmounts[{1}]-1) / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-2) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
+                                        }
+                                        else if (i == (target - upcard - i - j))
+                                        {
+                                            if ((target - upcard - i - j) > 10)
+                                            {
                                                 Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-1) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j - 10));
                                             }
-                        else
-                        {
+                                            else
+                                            {
                                                 Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-1) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
                                             }
 
-                        //    Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-1) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
-                    }
-                    else if (j == (target - upcard - i - j))
-                    {
-                        if ((target - upcard - i - j) > 10)
-                        {
+                                            //    Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-1) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
+                                        }
+                                        else if (j == (target - upcard - i - j))
+                                        {
+                                            if ((target - upcard - i - j) > 10)
+                                            {
                                                 Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-1) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j - 10));
                                             }
-                        else
-                        {
+                                            else
+                                            {
                                                 Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-1) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
                                             }
 
-                        //   Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-1) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
-                    }
-                    else if (i == j)
-                    {
-                        if ((target - upcard - i - j) > 10)
-                        {
+                                            //   Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) * ((cardAmounts[{2}]-1) / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
+                                        }
+                                        else if (i == j)
+                                        {
+                                            if ((target - upcard - i - j) > 10)
+                                            {
                                                 Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * ((cardAmounts[{1}]-1) / (cardAmounts[0]-1)) * (cardAmounts[{2}] / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j - 10));
                                             }
-                        else
-                        {
+                                            else
+                                            {
                                                 Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * ((cardAmounts[{1}]-1) / (cardAmounts[0]-1)) * (cardAmounts[{2}] / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
                                             }
 
-                        //    Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * ((cardAmounts[{1}]-1) / (cardAmounts[0]-1)) * (cardAmounts[{2}] / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
-                    }
-                    else
-                    {
-                        if ((target - upcard - i - j) > 10)
-                        {
+                                            //    Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * ((cardAmounts[{1}]-1) / (cardAmounts[0]-1)) * (cardAmounts[{2}] / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
+                                        }
+                                        else
+                                        {
+                                            if ((target - upcard - i - j) > 10)
+                                            {
                                                 Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) * (cardAmounts[{2}] / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j - 10));
                                             }
-                        else
-                        {
+                                            else
+                                            {
                                                 Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) * (cardAmounts[{2}] / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
                                             }
 
-                        //    Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) * (cardAmounts[{2}] / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
-                    }
+                                            //    Console.WriteLine("(cardAmounts[{0}] / cardAmounts[0]) * (cardAmounts[{1}] / (cardAmounts[0]-1)) * (cardAmounts[{2}] / (cardAmounts[0]-2)) + ", i, j, (target - upcard - i - j));
+                                        }
 
 
                 }
