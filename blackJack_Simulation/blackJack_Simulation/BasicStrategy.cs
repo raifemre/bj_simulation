@@ -81,7 +81,7 @@ namespace BlackjackSimulation
             {0, K, K, K, K, K, K, K, K, K, K}, //10
         };
 
-        public MoveAction Response(Hand hand, Card dealerUpCard, bool HasSplittedHand)
+        public MoveAction Response(Hand hand, Card dealerUpCard, bool HasSplittedHand, int[] cardAmounts)
         {
             int playerHardTotal = hand.GetValues()[0];
             bool hasSoftHand = false;

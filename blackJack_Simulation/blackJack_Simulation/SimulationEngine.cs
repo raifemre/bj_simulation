@@ -15,14 +15,14 @@ namespace BlackjackSimulation
         private bool wonLastTurn = false;
         private double balance = 10000.0;
         private double initialBet = 100.0;
-        private bool log = false;
+        private bool log = true;
 
         public SimulationEngine(int deckAmount, List<Player> externalPlayers)
         {
             currentShoe = new Shoe(deckAmount);
             Players = externalPlayers;
             dealer = new Dealer(new DealerStandOnSoftSeventeen());
-            myPlayer = new Player(new BasicStrategy(), new HiLoBetStrategy(), balance, initialBet);
+            myPlayer = new Player(new B10MoveStrategy(currentShoe.CardAmounts), new HiLoBetStrategy(), balance, initialBet);
             Players.Add(myPlayer);
         }
 
@@ -130,7 +130,7 @@ namespace BlackjackSimulation
                             //continue;
                         }
                         
-                        MoveAction move = currentPlayer.MoveStrategy.Response(currentPlayer.Hands[i], dealer._Hand.Cards[0], currentPlayer.HasSplittedHand());
+                        MoveAction move = currentPlayer.MoveStrategy.Response(currentPlayer.Hands[i], dealer._Hand.Cards[0], currentPlayer.HasSplittedHand(), currentShoe.CardAmounts);
 
                         //if (currentPlayer.HasSplittedHand() && move == MoveAction.Split)
                         //{

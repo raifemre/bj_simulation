@@ -17,7 +17,7 @@ namespace BlackjackSimulation
             SimulationEngine engine;
             double totalEarnings = 0;
 
-            int turns = 1000;
+            int turns = 100;
 
             
             for (int i = 0; i < turns; i++)
