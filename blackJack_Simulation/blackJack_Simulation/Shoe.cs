@@ -9,7 +9,7 @@ namespace BlackjackSimulation
     class Shoe
     {
         private int _deckAmount;
-        public int[] CardAmounts;
+        public double[] CardAmounts;
         public Stack<Card> Cards;
         public int CutCardIndex;
 
@@ -41,7 +41,7 @@ namespace BlackjackSimulation
 
             //Total Card Amounts
             //[0] = Total amount of cards, [1] = A, .... [10] = T, [11] = J, [12] = Q, [13] = K
-            CardAmounts = new int[14];
+            CardAmounts = new double[14];
             CardAmounts[0] = _deckAmount * 52;
             for (int i = 1; i < CardAmounts.Length; i++)
                 CardAmounts[i] = _deckAmount * 4;

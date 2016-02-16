@@ -89,7 +89,7 @@ namespace BlackjackSimulation
             {0, K, K, K, K, K, K, K, K, K, K}, //10
         };
 
-        public MoveAction Response(Hand hand, Card dealerUpCard, bool HasSplittedHand)
+        public MoveAction Response(Hand hand, Card dealerUpCard, bool hasSplittedHand)
         {
             int playerHardTotal = hand.GetValues()[0];
             bool hasSoftHand = false;
@@ -103,7 +103,7 @@ namespace BlackjackSimulation
             MoveAction softResponse = softStrategy[playerHardTotal, dealerUpCard.GetCardValue()];
 
 
-            if (hand.Cards.Count == 2 && !HasSplittedHand && hand.Cards[0].GetCardValue() == hand.Cards[1].GetCardValue())  // Split Hands
+            if (hand.Cards.Count == 2 && !hasSplittedHand && hand.Cards[0].GetCardValue() == hand.Cards[1].GetCardValue())  // Split Hands
             {
                 return splitStrategy[playerHardTotal/2, dealerUpCard.GetCardValue()];
             }

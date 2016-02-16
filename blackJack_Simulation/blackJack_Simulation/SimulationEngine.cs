@@ -143,7 +143,6 @@ namespace BlackjackSimulation
                             case MoveAction.Double:
                                 {
                                     currentPlayer.Hands[i].IsDoubled = true;
-                                    //Splittedsa durumuna MoveStrategy.Response() içerisinde bakacağımız için, eğer splittedsa zaten Double dönmeyecektir.
                                     if (currentPlayer.Balance >= currentPlayer.BetAmount)
                                     {                                        
                                         currentShoe.Deal(currentPlayer.Hands[i]);
@@ -167,8 +166,7 @@ namespace BlackjackSimulation
                                     break;
                                 }
                             case MoveAction.Split: //TODO : split üstüne split kontrolu
-                                {
-                                    
+                                {                                    
                                     if (!currentPlayer.HasSplittedHand())
                                     {
                                         currentPlayer.SplitHand();
@@ -231,7 +229,7 @@ namespace BlackjackSimulation
             int dealerTotal = dealer._Hand.GetValues()[0];
 
             if (dealer._Hand.GetValues().Length == 2)
-                dealerTotal = dealer._Hand.GetValues()[1]; // softsa softu al
+                dealerTotal = dealer._Hand.GetValues()[1];
 
             bool isTie = false;
 
