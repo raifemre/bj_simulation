@@ -2,9 +2,9 @@
 {
     class B10BetStrategy : IBetStrategy
     {
-        private double[] cardAmounts;
+        private int[] cardAmounts;
 
-        public B10BetStrategy(double[] cardAmounts)
+        public B10BetStrategy(int[] cardAmounts)
         {
             this.cardAmounts = cardAmounts;
         }
