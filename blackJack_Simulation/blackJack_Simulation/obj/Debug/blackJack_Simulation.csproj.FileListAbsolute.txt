@@ -1,12 +1,5 @@
-C:\Users\raifemre\Desktop\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\bin\Debug\blackJack_Simulation.exe.config
 D:\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\bin\Debug\blackJack_Simulation.exe.config
 D:\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\bin\Debug\blackJack_Simulation.exe
 D:\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\bin\Debug\blackJack_Simulation.pdb
-D:\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\obj\Debug\blackJack_Simulation.csprojResolveAssemblyReference.cache
 D:\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\obj\Debug\blackJack_Simulation.exe
 D:\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\obj\Debug\blackJack_Simulation.pdb
-C:\Users\raifemre\Desktop\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\obj\Debug\blackJack_Simulation.exe
-C:\Users\raifemre\Desktop\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\obj\Debug\blackJack_Simulation.pdb
-C:\Users\raifemre\Desktop\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\obj\Debug\blackJack_Simulation.csprojResolveAssemblyReference.cache
-C:\Users\raifemre\Desktop\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\bin\Debug\blackJack_Simulation.exe
-C:\Users\raifemre\Desktop\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\bin\Debug\blackJack_Simulation.pdb

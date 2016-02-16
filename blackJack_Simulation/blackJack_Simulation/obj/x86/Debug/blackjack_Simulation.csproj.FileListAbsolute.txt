@@ -1,6 +1,0 @@
-D:\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\bin\x86\Debug\blackJack_Simulation.exe.config
-D:\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\bin\x86\Debug\blackJack_Simulation.exe
-D:\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\bin\x86\Debug\blackJack_Simulation.pdb
-D:\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\obj\x86\Debug\blackJack_Simulation.exe
-D:\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\obj\x86\Debug\blackJack_Simulation.pdb
-D:\GitHub\bj_simulation\blackJack_Simulation\blackJack_Simulation\obj\x86\Debug\blackjack_Simulation.csprojResolveAssemblyReference.cache

@@ -4,19 +4,23 @@
     {
         public MoveAction Response(Hand hand)
         {
-            if (hand.GetValues().Length == 1) // TODO: no soft hand
+            if (hand.GetValues().Length == 2) 
             {
-                if (hand.GetValues()[0] < 18) //Kuralları okumadan yaptım Hit on soft 17 bu demek sanırım?
+                if (hand.GetValues()[1] < 18)
                 {
                     return MoveAction.Hit;
                 }
                 else
-                    return MoveAction.Stand; //Mantıksız değil
+                    return MoveAction.Stand; 
             }
             else
             {
-                System.Console.WriteLine("Dealer Soft Hand");
-                return MoveAction.Hit;
+                if (hand.GetValues()[0] < 18)
+                {
+                    return MoveAction.Hit;
+                }
+                else
+                    return MoveAction.Stand;
             }
         }
     }

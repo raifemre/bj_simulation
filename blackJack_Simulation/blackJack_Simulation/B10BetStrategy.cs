@@ -2,7 +2,14 @@
 {
     class B10BetStrategy : IBetStrategy
     {
-        public double Response(double initialBet , bool wonLastTurn, int[] cardAmounts)
+        private double[] cardAmounts;
+
+        public B10BetStrategy(double[] cardAmounts)
+        {
+            this.cardAmounts = cardAmounts;
+        }
+
+        public double Response(double initialBet , bool wonLastTurn)
         {
             return 1;
         }

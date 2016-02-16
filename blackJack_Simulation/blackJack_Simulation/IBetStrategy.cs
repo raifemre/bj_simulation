@@ -2,6 +2,6 @@
 {
     interface IBetStrategy
     {
-        double Response(double initialBet ,bool wonLastHand, int[] cardAmounts);
+        double Response(double initialBet ,bool wonLastHand);
     }
 }

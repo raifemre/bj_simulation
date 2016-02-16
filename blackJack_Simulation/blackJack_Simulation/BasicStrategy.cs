@@ -16,6 +16,14 @@ namespace BlackjackSimulation
         public const MoveAction PH = MoveAction.Hit; // SPLIT if double after split allowed, else HIT
         public const MoveAction RH = MoveAction.Hit; // SURRENDER if allowed, else HIT
         public const MoveAction K = MoveAction.Stand;
+
+        private double[] cardAmounts;
+
+        public BasicStrategy(double[] cardAmounts)
+        {
+            this.cardAmounts = cardAmounts;
+        }
+
         private static MoveAction[,] hardStrategy = {
         //   0  1  2  3  4  5  6  7  8  9 10
             {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0}, //0
@@ -81,7 +89,7 @@ namespace BlackjackSimulation
             {0, K, K, K, K, K, K, K, K, K, K}, //10
         };
 
-        public MoveAction Response(Hand hand, Card dealerUpCard, bool HasSplittedHand, int[] cardAmounts)
+        public MoveAction Response(Hand hand, Card dealerUpCard, bool HasSplittedHand)
         {
             int playerHardTotal = hand.GetValues()[0];
             bool hasSoftHand = false;
@@ -94,8 +102,6 @@ namespace BlackjackSimulation
             MoveAction hardResponse = hardStrategy[playerHardTotal, dealerUpCard.GetCardValue()];
             MoveAction softResponse = softStrategy[playerHardTotal, dealerUpCard.GetCardValue()];
 
-            //  TODO: KURALLAR SIMULASYONDA DURMALI !! yapıldı.
-            //  TODO: A,A SPLIT EDİLİRSE SADECE TEK KART VER SONRA STANDLE !!  .yapıldı.
 
             if (hand.Cards.Count == 2 && !HasSplittedHand && hand.Cards[0].GetCardValue() == hand.Cards[1].GetCardValue())  // Split Hands
             {

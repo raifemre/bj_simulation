@@ -9,7 +9,7 @@ namespace BlackjackSimulation
     {
         public IDealerMoveStrategy MoveStrategy;
         public Hand _Hand;
-        public bool ClosedCardTurned; //Güzel isim bulamadım
+        public bool HoleCardShowed;
 
         public Dealer(IDealerMoveStrategy move)
         {
@@ -17,15 +17,15 @@ namespace BlackjackSimulation
             MoveStrategy = move;
         }
 
-        public void TurnClosedCard() //Güzel isim bulamadım
+        public void ShowHoleCard()
         {
-            ClosedCardTurned = true;
+            HoleCardShowed = true;
         }
 
         public void ClearHand()
         {
             _Hand.ClearHand();
-            ClosedCardTurned = false;
+            HoleCardShowed = false;
         }
 
         public Card LastDealtCard()

@@ -2,6 +2,6 @@
 {
     interface IPlayerMoveStrategy
     {
-        MoveAction Response(Hand hand, Card dealerUpCard, bool HasSplittedHand, int[] CardAmounts);
+        MoveAction Response(Hand hand, Card dealerUpCard, bool HasSplittedHand);
     }
 }

@@ -16,13 +16,6 @@
         Queen = 12,
         King = 13
     }
-
-    /// <summary>
-    /// Returns the blackjack value of a card;
-    /// A = 1,
-    /// ...
-    /// T,J,Q,K = 10
-    /// </summary>
     static class CardValues
     {
         public static int GetCardValue(this Card card)

@@ -7,48 +7,55 @@ namespace BlackjackSimulation
 {
     class HiLoBetStrategy : IBetStrategy
     {
-        public double Response(double initialBet , bool wonLastTurn, int[] cardAmounts)
-        {
-            int RunningCount = 0;
-            double TrueCount = 0.0;
-            double RemainingDeck = 8.00;
-            int[] PlayedCards = new int[14];
+        private double[] cardAmounts;
 
-            
+        public HiLoBetStrategy(double[] cardAmounts)
+        {
+            this.cardAmounts = cardAmounts;
+        }
+
+        public double Response(double initialBet, bool wonLastTurn)
+        {
+            double runningCount = 0;
+            double trueCount = 0.0;
+            double remainingDeck = 8.00;
+            double[] playedCards = new double[14];
+
+
             for (int i = 0; i < cardAmounts.Length; i++)
             {
                 //Console.Write(" " + cardAmounts[i] + " ");
                 if (i == 0)
                 {
-                    PlayedCards[i] = 416 - cardAmounts[i];
+                    playedCards[i] = 416d - cardAmounts[i];
                 }
                 else
                 {
-                    PlayedCards[i] = 32 - cardAmounts[i];
+                    playedCards[i] = 32d - cardAmounts[i];
                 }
                 //Console.Write(" " + PlayedCards[i] + " ");
             }
-           
-            for (int i = 0; i < PlayedCards.Length; i++)
+
+            for (int i = 0; i < playedCards.Length; i++)
             {
-                if(i == 2 || i == 3 || i == 4 || i == 5 || i == 6)
+                if (i == 2 || i == 3 || i == 4 || i == 5 || i == 6)
                 {
-                    RunningCount += PlayedCards[i];
+                    runningCount += playedCards[i];
                 }
                 else if (i == 10 || i == 11 || i == 12 || i == 13 || i == 1)
                 {
-                    RunningCount -= PlayedCards[i];
+                    runningCount -= playedCards[i];
                 }
                 else
                 {
-                    RunningCount += 0;
+                    runningCount += 0;
                 }
             }
 
-            RemainingDeck = (double)cardAmounts[0] / 52 ;
-            TrueCount = RunningCount / RemainingDeck;
+            remainingDeck = (double)cardAmounts[0] / 52;
+            trueCount = runningCount / remainingDeck;
             //Console.WriteLine("Running Count: {0}\t True Count: {1} ", RunningCount, TrueCount);
-            if (TrueCount < 1) TrueCount = 1;
+            if (trueCount < 1) trueCount = 1;
             return 1;
         }
     }
