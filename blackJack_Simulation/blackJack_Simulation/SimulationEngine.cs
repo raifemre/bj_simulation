@@ -22,7 +22,7 @@ namespace BlackjackSimulation
             currentShoe = new Shoe(deckAmount);
             Players = externalPlayers;
             dealer = new Dealer(new DealerStandOnSoftSeventeen());
-            myPlayer = new Player(new B10MoveStrategy(currentShoe.CardAmounts), new B10BetStrategy(currentShoe.CardAmounts), balance, initialBet);
+            myPlayer = new Player(new BasicStrategy(currentShoe.CardAmounts), new B10BetStrategy(currentShoe.CardAmounts), balance, initialBet);
             Players.Add(myPlayer);
         }
 
@@ -239,6 +239,9 @@ namespace BlackjackSimulation
                 {
                     int playerTotal = Players[i].Hands[j].GetValues()[0];
 
+                    if (Players[i].Hands[j].GetValues().Length == 2)
+                        playerTotal = Players[i].Hands[j].GetValues()[1];
+
                     bool playerWins = false;
                     if (playerTotal > dealerTotal)
                         playerWins = true;
@@ -263,12 +266,13 @@ namespace BlackjackSimulation
                         myPlayer.BetAmount = initialBet;
 
                         Console.BackgroundColor = ConsoleColor.DarkBlue;
-                        if (log) Console.WriteLine("[{2}]Player: {0:00}\tDealer: {1:00}\t\tWinner: PLAYER\t\t\t", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                        if (log) Console.WriteLine("[{2}]Player: {0:00}\tDealer: {1:00}\t\tWinner: PLAYER\t\t\t", playerTotal, dealerTotal, i);
                         Console.BackgroundColor = ConsoleColor.Black;
                     }
                     else if (isTie)
                     {
-                        if (!Players[i].Hands[j].IsBlackjack && dealer._Hand.Cards.Count == 2)
+                        
+                        if (!Players[i].Hands[j].IsBlackjack && dealer._Hand.Cards.Count == 2 && dealer._Hand.IsBlackjack)
                         {
                             // berabere ancak dealer ilk iki kartta 21 yaptıysa sen 3 kartla 21 yapıysan tie parası alamazsın !
                         }
@@ -276,7 +280,7 @@ namespace BlackjackSimulation
                         {
                             Players[i].Balance += Players[i].BetAmount*2.5; //TODO : BURAYI ANLAMADIM ???
                             Console.BackgroundColor = ConsoleColor.DarkBlue;
-                            if (log) Console.WriteLine("[{2}]Player: {0:00}\tDealer: {1:00}\t\tWinner: PLAYER\t\t\t", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                            if (log) Console.WriteLine("[{2}]Player: {0:00}\tDealer: {1:00}\t\tWinner: PLAYER\t\t\t", playerTotal, dealerTotal, i);
                             Console.BackgroundColor = ConsoleColor.Black;
                         }
                         else if (Players[i].Hands[i].IsBusted)
@@ -285,9 +289,10 @@ namespace BlackjackSimulation
                         }
                         else
                         {
+                           
                             Players[i].Balance += Players[i].BetAmount;
                             Console.BackgroundColor = ConsoleColor.DarkBlue;
-                            if (log) Console.WriteLine("[{2}]Player: {0:00}\tDealer: {1:00}\t\tWinner: NONE\t\t\t", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                            if (log) Console.WriteLine("[{2}]Player: {0:00}\tDealer: {1:00}\t\tWinner: NONE\t\t\t", playerTotal, dealerTotal, i);
                             Console.BackgroundColor = ConsoleColor.Black;
                         }
                         
@@ -296,7 +301,7 @@ namespace BlackjackSimulation
                     {
                         wonLastTurn = false;
                         Console.BackgroundColor = ConsoleColor.DarkBlue;
-                        if (log) Console.WriteLine("[{2}]Player: {0:00}\tDealer: {1:00}\t\tWinner: DEALER\t\t\t", Players[i].Hands[i].GetValues()[0], dealerTotal, i);
+                        if (log) Console.WriteLine("[{2}]Player: {0:00}\tDealer: {1:00}\t\tWinner: DEALER\t\t\t", playerTotal, dealerTotal, i);
                         Console.BackgroundColor = ConsoleColor.Black;
                     }
                 }

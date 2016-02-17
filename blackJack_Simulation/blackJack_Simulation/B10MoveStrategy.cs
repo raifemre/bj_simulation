@@ -22,15 +22,21 @@ namespace BlackjackSimulation
             Setup(hand, dealerUpCard, hasSplittedHand);
 
             //TODO Soft hand comparations..
-            if (false) {    }  //(_playerTotalSoft > 0)
+            if (false) { }  //(_playerTotalSoft > 0)
 
             else
             {
-                if (WinChanceWhenStand(_playerTotalHard) > WinChanceWhenHit(_playerTotalHard, false))
+                double winChanceStand = Math.Round(WinChanceWhenStand(_playerTotalHard), 4);
+                double winChanceHit = Math.Round(WinChanceWhenHit(_playerTotalHard, false), 4);
+                double winChanceDouble = Math.Round(WinChanceWhenDoubleDown(_playerTotalHard), 4);
+                Console.WriteLine("WIN CHANCES : Hit:{0} Stand:{1} DoubleDown:{2}", winChanceHit, winChanceStand, winChanceDouble);
+                if (winChanceStand > winChanceHit)
+                {
                     return MoveAction.Stand;
+                }
                 else
                 {
-                    if (WinChanceWhenDoubleDown(_playerTotalHard) > 0.505)
+                    if (winChanceDouble > 0.505)
                         return MoveAction.Double;
                     else
                         return MoveAction.Hit;
@@ -95,13 +101,16 @@ namespace BlackjackSimulation
         {
             double probability = 0d;
 
-            for (double cardValue = 1d; cardValue < 11d; cardValue++)
+            for (double cardValue = 1d; cardValue < 12d; cardValue++)
                 if (playerTotal + cardValue < 22d)
+                {
                     probability += ProbOf((int)cardValue) * WinChanceWhenStand(playerTotal + cardValue);
-
+                    
+                }
+                    
             return probability;
         }
-
+        
         #region PlayerVDealer
 
         private double PlayerBelow18vDealer()
@@ -127,6 +136,10 @@ namespace BlackjackSimulation
         private double PlayerIs21vDealer()
         {
             return 1d - DealerProbOfGoal(21d);
+        }
+        private double DealerBustChance()
+        {
+            return 1d - (DealerProbOfGoal(17d) + DealerProbOfGoal(18d) + DealerProbOfGoal(19d) + DealerProbOfGoal(20d) + DealerProbOfGoal(21d));
         }
 
         #endregion

@@ -15,7 +15,7 @@ namespace BlackjackSimulation
             SimulationEngine engine;
             
             double totalEarnings = 0;
-            int turns = 1000;
+            int turns = 2000;
 
             //System.Diagnostics.Stopwatch stopwatch= new System.Diagnostics.Stopwatch();
             //stopwatch.Start();

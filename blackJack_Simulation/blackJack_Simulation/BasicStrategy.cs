@@ -96,7 +96,10 @@ namespace BlackjackSimulation
 
             for (int i = 0; i < hand.Cards.Count; i++)
             {
-                if (hand.Cards[i].GetCardValue() == 1) hasSoftHand = true;
+                if (hand.GetValues().Length == 2)
+                    hasSoftHand = true; //TODO : A + 7 + 10 varsa eğer bunu soft 18 diye değelendiriyor. HATALI ! . Düzeltildi
+
+
             }
 
             MoveAction hardResponse = hardStrategy[playerHardTotal, dealerUpCard.GetCardValue()];
@@ -105,7 +108,7 @@ namespace BlackjackSimulation
 
             if (hand.Cards.Count == 2 && !hasSplittedHand && hand.Cards[0].GetCardValue() == hand.Cards[1].GetCardValue())  // Split Hands
             {
-                return splitStrategy[playerHardTotal/2, dealerUpCard.GetCardValue()];
+                return splitStrategy[playerHardTotal / 2, dealerUpCard.GetCardValue()];
             }
             else if (hasSoftHand)
             {
@@ -115,8 +118,7 @@ namespace BlackjackSimulation
             {
                 return hardResponse;
             }
-  
+
         }
     }
 }
- 
