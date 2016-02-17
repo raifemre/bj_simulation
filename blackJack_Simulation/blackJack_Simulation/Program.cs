@@ -15,7 +15,10 @@ namespace BlackjackSimulation
             SimulationEngine engine;
             
             double totalEarnings = 0;
-            int turns = 100;
+            int turns = 1000;
+
+            //System.Diagnostics.Stopwatch stopwatch= new System.Diagnostics.Stopwatch();
+            //stopwatch.Start();
             
             for (int i = 0; i < turns; i++)
             {
@@ -24,8 +27,11 @@ namespace BlackjackSimulation
                 totalEarnings += engine.myPlayer.Balance;
             }
 
-            Console.WriteLine(">>Balance: {0} [Turns: {1}]", totalEarnings / turns, turns); // 1. 8388 / 2. 8461  / 3. 8455 / 4. 8456 / 5. 8468  / 6. 8519 /  7. 8526  / 8. 8379 / 9. 8352  / 10. 8428
-            
+            Console.WriteLine(">>Balance: {0} [Turns: {1}]", totalEarnings / turns, turns);
+
+            //stopwatch.Stop();
+            //Console.WriteLine("Süre: {0}",stopwatch.ElapsedMilliseconds);
+
             Console.ReadLine();
         }
     }
