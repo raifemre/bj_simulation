@@ -22,7 +22,7 @@ namespace BlackjackSimulation
             currentShoe = new Shoe(deckAmount);
             Players = externalPlayers;
             dealer = new Dealer(new DealerStandOnSoftSeventeen());
-            myPlayer = new Player(new BasicStrategy(currentShoe.CardAmounts), new B10BetStrategy(currentShoe.CardAmounts), balance, initialBet);
+            myPlayer = new Player(new B10MoveStrategy(currentShoe.CardAmounts), new B10BetStrategy(currentShoe.CardAmounts), balance, initialBet);
             Players.Add(myPlayer);
         }
 
@@ -30,6 +30,7 @@ namespace BlackjackSimulation
         {
             totalTurns++;
 
+            Console.WriteLine(new String('*',60));
             if (log)
                 Console.WriteLine(">>Turn: {0:00}\tBalance: {1}\t\tBetAmount: {2}\t\t\t", totalTurns, myPlayer.Balance, myPlayer.BetAmount);
 
@@ -112,17 +113,17 @@ namespace BlackjackSimulation
                         //    currentPlayer.Hands[i].IsCompleted = true;
                         //}
                         
-                        MoveAction move = currentPlayer.MoveStrategy.Response(currentPlayer.Hands[i], dealer._Hand.Cards[0], currentPlayer.HasSplittedHand());
+                        MoveAction move = currentPlayer.MoveStrategy.Response(currentPlayer.Hands[i], dealer._Hand.Cards[0], currentPlayer.HasSplittedHand);
 
                         // 1. response double + kart sayısı 2 den fazla ise = HIT  2. hand splitted + response double = HIT 
-                        if ((move == MoveAction.Double && currentPlayer.Hands[i].Cards.Count > 2 && !currentPlayer.HasSplittedHand()) || (move == MoveAction.Double && currentPlayer.HasSplittedHand()))   
+                        if ((move == MoveAction.Double && currentPlayer.Hands[i].Cards.Count > 2 && !currentPlayer.HasSplittedHand) || (move == MoveAction.Double && currentPlayer.HasSplittedHand))   
                         {
                             move =  MoveAction.Hit;
                            // Console.WriteLine("changed");
                         }
                         
                         // A,A split durumunda 2 kartım varsa artık kart alma stand yap
-                        if (currentPlayer.HasSplittedHand() && currentPlayer.Hands[i].Cards.Count == 2 && currentPlayer.Hands[i].Cards[0] == Card.Ace)
+                        if (currentPlayer.HasSplittedHand && currentPlayer.Hands[i].Cards.Count == 2 && currentPlayer.Hands[i].Cards[0] == Card.Ace)
                         {
                             move = MoveAction.Stand;
                         }
@@ -167,7 +168,7 @@ namespace BlackjackSimulation
                                 }
                             case MoveAction.Split: //TODO : split üstüne split kontrolu
                                 {                                    
-                                    if (!currentPlayer.HasSplittedHand())
+                                    if (!currentPlayer.HasSplittedHand)
                                     {
                                         currentPlayer.SplitHand();
                                         currentPlayer.Balance -= currentPlayer.BetAmount;

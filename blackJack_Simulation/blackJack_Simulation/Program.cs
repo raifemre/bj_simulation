@@ -15,10 +15,10 @@ namespace BlackjackSimulation
             SimulationEngine engine;
             
             double totalEarnings = 0;
-            int turns = 2000;
+            int turns = 100;
 
-            //System.Diagnostics.Stopwatch stopwatch= new System.Diagnostics.Stopwatch();
-            //stopwatch.Start();
+            System.Diagnostics.Stopwatch stopwatch = new System.Diagnostics.Stopwatch();
+            stopwatch.Start();
             
             for (int i = 0; i < turns; i++)
             {
@@ -29,8 +29,8 @@ namespace BlackjackSimulation
 
             Console.WriteLine(">>Balance: {0} [Turns: {1}]", totalEarnings / turns, turns);
 
-            //stopwatch.Stop();
-            //Console.WriteLine("Süre: {0}",stopwatch.ElapsedMilliseconds);
+            stopwatch.Stop();
+            Console.WriteLine("Süre: {0}", stopwatch.ElapsedMilliseconds);
 
             Console.ReadLine();
         }

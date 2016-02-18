@@ -12,7 +12,7 @@ namespace BlackjackSimulation
         public IBetStrategy BetStrategy;
         public double Balance;
         public double BetAmount;
-        
+        public bool HasSplittedHand;
 
         public Player(IPlayerMoveStrategy moveStrategy, IBetStrategy betStrategy, double balance, double betAmount)
         {
@@ -33,14 +33,14 @@ namespace BlackjackSimulation
             return false;
         }
 
-        public bool HasSplittedHand()
-        {
-            return Hands.Count == 2;
-        }
+        //public bool HasSplittedHand()
+        //{
+        //    return Hands.Count == 2;
+        //}
 
         public void ClearHands()
         {
-            if (HasSplittedHand())
+            if (HasSplittedHand)
                 Hands.RemoveAt(1);
             Hands[0].ClearHand();
         }
@@ -52,6 +52,7 @@ namespace BlackjackSimulation
             tempHand.AddCard(tempCard);
             Hands.Add(tempHand);
             Hands[0].Cards.RemoveAt(1); //.Remove(tempCard) yaparsak eğer 0. index'teki card'ı silebilir !
+            HasSplittedHand = true;
         }
 
         public Card LastDealtCard()
