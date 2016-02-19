@@ -17,9 +17,9 @@ namespace BlackjackSimulation
         public const MoveAction RH = MoveAction.Hit; // SURRENDER if allowed, else HIT
         public const MoveAction K = MoveAction.Stand;
 
-        private double[] cardAmounts;
+        private int[] cardAmounts;
 
-        public BasicStrategy(double[] cardAmounts)
+        public BasicStrategy(int[] cardAmounts)
         {
             this.cardAmounts = cardAmounts;
         }

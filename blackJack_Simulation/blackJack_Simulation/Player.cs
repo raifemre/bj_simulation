@@ -43,6 +43,7 @@ namespace BlackjackSimulation
             if (HasSplittedHand)
                 Hands.RemoveAt(1);
             Hands[0].ClearHand();
+            HasSplittedHand = false;
         }
         
         public void SplitHand()
