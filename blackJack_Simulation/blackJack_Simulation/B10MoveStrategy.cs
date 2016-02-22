@@ -20,9 +20,40 @@ namespace BlackjackSimulation
         {
             Setup(hand, dealerUpCard, hasSplittedHand);
 
-            //TODO Soft hand comparations..
-            if (false) { }  //(_playerTotalSoft > 0)
+            
+            bool hasSoftHand = false;
 
+            for (int i = 0; i < hand.Cards.Count; i++)
+            {
+                if (hand.GetValues().Length == 2)
+                    hasSoftHand = true; 
+            }
+
+            //TODO Soft hand comparations..
+            if (hand.Cards.Count == 2 && !hasSplittedHand && hand.Cards[0].GetCardValue() == hand.Cards[1].GetCardValue())
+            {
+                int cardValue = hand.Cards[0].GetCardValue();
+                if (cardValue == 10 || cardValue == 9)
+                    return MoveAction.Stand;
+                else if (cardValue == 5)
+                    return MoveAction.Double;
+                else
+                    return MoveAction.Split;
+
+            }
+            else if (hasSoftHand)
+            {
+                //Console.WriteLine("HardHit:{0}\tSoftHit:{1}\t\tHardStand:{2}\tSoftStand:{3}", WinChanceWhenHit(_playerTotalHard,false), WinChanceWhenHit(_playerTotalSoft,false), WinChanceWhenStand(_playerTotalHard), WinChanceWhenStand(_playerTotalSoft));
+                if(_playerTotalSoft < 18)
+                {
+                    return MoveAction.Hit;
+                }
+                else
+                {
+                    return MoveAction.Stand;
+                }
+                
+            }
             else
             {
                 double winChanceStand = Math.Round(WinChanceWhenStand(_playerTotalHard), 4);
@@ -38,7 +69,10 @@ namespace BlackjackSimulation
                 else
                 {
                     if (winChanceDouble > 0.4)
+                    {
+                        //Console.ReadLine();
                         return MoveAction.Double;
+                    }
                     else
                         return MoveAction.Hit;
                 }

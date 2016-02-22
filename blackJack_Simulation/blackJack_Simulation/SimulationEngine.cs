@@ -180,6 +180,7 @@ namespace BlackjackSimulation
                                 }
                             case MoveAction.Split: //TODO : split üstüne split kontrolu
                                 {
+                                  
                                     if (!currentPlayer.HasSplittedHand)
                                     {
                                         currentPlayer.SplitHand();
@@ -252,7 +253,10 @@ namespace BlackjackSimulation
                 {
                     int playerTotal = Players[i].Hands[j].GetValues()[0];
 
-                    if (Players[i].Hands[j].GetValues().Length == 2)
+                    if (playerTotal > 21)
+                        Players[i].Hands[j].IsBusted = true;
+
+                        if (Players[i].Hands[j].GetValues().Length == 2)
                         playerTotal = Players[i].Hands[j].GetValues()[1];
 
                     bool playerWins = false;
@@ -323,10 +327,10 @@ namespace BlackjackSimulation
                     }
                 }
 
-                using (StreamWriter writer = new StreamWriter("debug.txt", true))
-                {
-                    writer.WriteLine("{0:00}\t{1:00}", myPlayer.Balance, totalTurns);
-                }
+                //using (StreamWriter writer = new StreamWriter("debug.txt", true))
+                //{
+                    //writer.WriteLine("{0:00}\t{1:00}", myPlayer.Balance, totalTurns);
+                //}
 
                 // Report of each turn
                 //Console.WriteLine("P: {0}\tD: {1}\tBalance: {2}", My._Hand.GetValues()[0], Dealer._Hand.GetValues()[0], My.Balance);
